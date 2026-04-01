@@ -155,3 +155,13 @@ pnpm install && pnpm build
 ## ライセンス
 
 MIT
+
+## サードパーティ
+
+このプロジェクトは以下のプロジェクトと連携しています:
+
+- [Claude Code Game Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) by Donchitos (MIT License)
+- [Poly Haven](https://polyhaven.com) (CC0)
+- [Model Context Protocol SDK](https://github.com/modelcontextprotocol/typescript-sdk) by Anthropic (MIT License)
+
+詳細は [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md) をご覧ください。
