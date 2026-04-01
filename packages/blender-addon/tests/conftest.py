@@ -75,6 +75,12 @@ _mathutils_mock = _build_mathutils_mock()
 
 sys.modules["bpy"] = _bpy_mock
 sys.modules["mathutils"] = _mathutils_mock
+sys.modules["bmesh"] = MagicMock(name="bmesh")
+sys.modules["bpy_extras"] = MagicMock(name="bpy_extras")
+sys.modules["bpy_extras.io_utils"] = MagicMock(name="bpy_extras.io_utils")
+sys.modules["gpu"] = MagicMock(name="gpu")
+sys.modules["gpu_extras"] = MagicMock(name="gpu_extras")
+sys.modules["bl_math"] = MagicMock(name="bl_math")
 
 
 # ---------------------------------------------------------------------------

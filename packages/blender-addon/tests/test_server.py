@@ -27,7 +27,7 @@ import pytest
 # Ensure the addon package is importable (same bootstrap as test_tool_executor).
 # ---------------------------------------------------------------------------
 
-_ADDON_DIR = "C:/Users/shieru_k/Documents/20260401_162718/packages/blender-addon"
+_ADDON_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 _PACKAGE_NAME = "openforge_addon"
 
 if _PACKAGE_NAME not in sys.modules:
