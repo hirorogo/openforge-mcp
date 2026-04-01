@@ -100,11 +100,20 @@ See the [Getting Started guide](docs/getting-started.md) for full details.
 
 ## Docs
 
-- [Getting Started](docs/getting-started.md) -- setup instructions
-- [Tool Reference](docs/tool-reference.md) -- full tool list and parameters
-- [Architecture](docs/architecture.md) -- how it works, protocols, project structure
-- [VRChat Guide](docs/vrchat-guide.md) -- world building and avatar workflows
-- [Contributing](CONTRIBUTING.md) -- how to help
+Documentation site: **https://hirorogo.github.io/openforge-mcp/**
+
+| Guide | Description |
+|-------|-------------|
+| [Introduction](https://hirorogo.github.io/openforge-mcp/docs/intro) | Overview and unique features |
+| [Installation](https://hirorogo.github.io/openforge-mcp/docs/setup/install) | From Node.js to first connection |
+| [First Steps](https://hirorogo.github.io/openforge-mcp/docs/tutorials/first-steps) | Your first AI command |
+| [Scene Building](https://hirorogo.github.io/openforge-mcp/docs/tutorials/scene-building) | Build a rooftop garden from scratch |
+| [Blender Modeling](https://hirorogo.github.io/openforge-mcp/docs/tutorials/modeling) | Create a lantern and export it |
+| [Blender to Unity](https://hirorogo.github.io/openforge-mcp/docs/tutorials/cross-app) | Cross-app pipeline tutorial |
+| [Save and Restore](https://hirorogo.github.io/openforge-mcp/docs/tutorials/save-restore) | Version control without Git knowledge |
+| [VRChat World](https://hirorogo.github.io/openforge-mcp/docs/tutorials/vrchat) | Build a starry observation deck |
+| [Tool Reference](https://hirorogo.github.io/openforge-mcp/docs/reference/unity-tools) | All Unity / Blender / Godot tools |
+| [Contributing](CONTRIBUTING.md) | How to submit PRs and add tools |
 
 ## Roadmap
 
