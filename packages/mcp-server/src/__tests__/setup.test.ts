@@ -66,6 +66,16 @@ describe("setup", () => {
       process.env.APPDATA = originalAppData;
     });
 
+    it("should return Linux path for Claude Desktop on linux", () => {
+      vi.mocked(os.platform).mockReturnValue("linux");
+      vi.mocked(os.homedir).mockReturnValue("/home/testuser");
+
+      const result = getClientConfigPath("claude-desktop");
+      expect(result).toBe(
+        path.join("/home/testuser", ".config", "Claude", "claude_desktop_config.json"),
+      );
+    });
+
     it("should return cursor config path", () => {
       vi.mocked(os.homedir).mockReturnValue("/Users/testuser");
 

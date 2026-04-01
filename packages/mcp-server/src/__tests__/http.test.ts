@@ -27,6 +27,7 @@ function request(
   method: string,
   path: string,
   body?: unknown,
+  extraHeaders?: Record<string, string>,
 ): Promise<{ status: number; headers: http.IncomingHttpHeaders; body: any }> {
   return new Promise((resolve, reject) => {
     const addr = server.address() as { port: number };
@@ -35,7 +36,7 @@ function request(
       port: addr.port,
       path,
       method,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...extraHeaders },
     };
 
     const req = http.request(options, (res) => {
@@ -65,13 +66,15 @@ describe("HTTP API Server", () => {
   let router: ToolRouter;
   let unityAdapter: ReturnType<typeof createMockAdapter>;
   let blenderAdapter: ReturnType<typeof createMockAdapter>;
+  let godotAdapter: ReturnType<typeof createMockAdapter>;
   let server: http.Server;
 
   beforeEach(async () => {
     registry = new ToolRegistry();
     unityAdapter = createMockAdapter("unity");
     blenderAdapter = createMockAdapter("blender");
-    router = new ToolRouter(registry, unityAdapter as any, blenderAdapter as any, createMockAdapter("godot") as any);
+    godotAdapter = createMockAdapter("godot");
+    router = new ToolRouter(registry, unityAdapter as any, blenderAdapter as any, godotAdapter as any);
 
     registry.registerTools([
       {
@@ -98,7 +101,7 @@ describe("HTTP API Server", () => {
     // Suppress stderr output from createHttpServer
     const origWrite = process.stderr.write;
     process.stderr.write = (() => true) as any;
-    server = createHttpServer(registry, router, unityAdapter as any, blenderAdapter as any, 0);
+    server = createHttpServer(registry, router, unityAdapter as any, blenderAdapter as any, 0, godotAdapter as any);
     process.stderr.write = origWrite;
 
     // Wait for server to start listening
@@ -122,7 +125,7 @@ describe("HTTP API Server", () => {
       const res = await request(server, "GET", "/api/status");
       expect(res.status).toBe(200);
       expect(res.body.mode).toBe("full");
-      expect(res.body.connections).toEqual({ unity: false, blender: false });
+      expect(res.body.connections).toEqual({ unity: false, blender: false, godot: false });
       expect(res.body.toolCount).toBe(2);
     });
 
@@ -131,6 +134,7 @@ describe("HTTP API Server", () => {
       const res = await request(server, "GET", "/api/status");
       expect(res.body.connections.unity).toBe(true);
       expect(res.body.connections.blender).toBe(false);
+      expect(res.body.connections.godot).toBe(false);
     });
 
     it("should reflect the current tool mode", async () => {
@@ -273,21 +277,42 @@ describe("HTTP API Server", () => {
   });
 
   describe("CORS headers", () => {
-    it("should include Access-Control-Allow-Origin in GET responses", async () => {
-      const res = await request(server, "GET", "/api/status");
-      expect(res.headers["access-control-allow-origin"]).toBe("*");
+    it("should include Access-Control-Allow-Origin for allowed localhost origin", async () => {
+      const res = await request(server, "GET", "/api/status", undefined, {
+        Origin: "http://localhost:3000",
+      });
+      expect(res.headers["access-control-allow-origin"]).toBe("http://localhost:3000");
     });
 
-    it("should include Access-Control-Allow-Origin in POST responses", async () => {
+    it("should include Access-Control-Allow-Origin for allowed 127.0.0.1 origin", async () => {
+      const res = await request(server, "GET", "/api/status", undefined, {
+        Origin: "http://127.0.0.1:8080",
+      });
+      expect(res.headers["access-control-allow-origin"]).toBe("http://127.0.0.1:8080");
+    });
+
+    it("should not include Access-Control-Allow-Origin for disallowed origin", async () => {
+      const res = await request(server, "GET", "/api/status", undefined, {
+        Origin: "http://evil.com",
+      });
+      expect(res.headers["access-control-allow-origin"]).toBeUndefined();
+    });
+
+    it("should not include Access-Control-Allow-Origin when no Origin header", async () => {
+      const res = await request(server, "GET", "/api/status");
+      expect(res.headers["access-control-allow-origin"]).toBeUndefined();
+    });
+
+    it("should include Access-Control-Allow-Origin in POST responses for allowed origin", async () => {
       const res = await request(server, "POST", "/api/execute", {
         target: "unity",
         tool: "create_gameobject",
         args: { name: "Cube" },
-      });
-      expect(res.headers["access-control-allow-origin"]).toBe("*");
+      }, { Origin: "http://localhost:3000" });
+      expect(res.headers["access-control-allow-origin"]).toBe("http://localhost:3000");
     });
 
-    it("should handle OPTIONS preflight requests", async () => {
+    it("should handle OPTIONS preflight requests with allowed origin", async () => {
       const addr = server.address() as { port: number };
       const res = await new Promise<{ status: number; headers: http.IncomingHttpHeaders }>((resolve, reject) => {
         const req = http.request(
@@ -296,6 +321,7 @@ describe("HTTP API Server", () => {
             port: addr.port,
             path: "/api/execute",
             method: "OPTIONS",
+            headers: { Origin: "http://localhost:3000" },
           },
           (resp) => {
             resp.on("data", () => {});
@@ -307,7 +333,7 @@ describe("HTTP API Server", () => {
       });
 
       expect(res.status).toBe(204);
-      expect(res.headers["access-control-allow-origin"]).toBe("*");
+      expect(res.headers["access-control-allow-origin"]).toBe("http://localhost:3000");
       expect(res.headers["access-control-allow-methods"]).toContain("POST");
       expect(res.headers["access-control-allow-headers"]).toContain("Content-Type");
     });

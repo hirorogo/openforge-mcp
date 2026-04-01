@@ -1,13 +1,27 @@
 import { createOpenForgeServer, ServerOptions } from "./server.js";
 import { createHttpServer } from "./http.js";
 import { ToolMode } from "./registry.js";
+import {
+  DEFAULT_HTTP_PORT,
+  DEFAULT_SSE_PORT,
+  DEFAULT_DASHBOARD_PORT,
+} from "./constants.js";
+
+function validatePort(value: string, name: string): number {
+  const port = parseInt(value, 10);
+  if (isNaN(port) || port < 1 || port > 65535) {
+    console.error(`[ERROR] Invalid ${name}: ${value} (must be 1-65535)`);
+    process.exit(1);
+  }
+  return port;
+}
 
 function parseArgs(argv: string[]): ServerOptions & { httpPort: number; dashboardPort: number } {
   let mode: ToolMode = "full";
   let transport: "stdio" | "sse" = "stdio";
-  let ssePort = 19820;
-  let httpPort = 19810;
-  let dashboardPort = 19821;
+  let ssePort = DEFAULT_SSE_PORT;
+  let httpPort = DEFAULT_HTTP_PORT;
+  let dashboardPort = DEFAULT_DASHBOARD_PORT;
   let projectPath: string | undefined;
   let autoSave = false;
 
@@ -28,16 +42,16 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number; dashboar
         process.stderr.write(`Unknown transport "${value}". Using "stdio".\n`);
       }
     } else if (arg === "--sse-port" && i + 1 < argv.length) {
-      ssePort = parseInt(argv[++i], 10);
+      ssePort = validatePort(argv[++i], "sse-port");
     } else if (arg === "--http-port" && i + 1 < argv.length) {
-      httpPort = parseInt(argv[++i], 10);
+      httpPort = validatePort(argv[++i], "http-port");
     } else if (arg === "--project-path" && i + 1 < argv.length) {
       projectPath = argv[++i];
     } else if (arg === "--godot-port" && i + 1 < argv.length) {
       // Godot adapter port is passed via environment variable
       process.env.OPENFORGE_GODOT_PORT = argv[++i];
     } else if (arg === "--dashboard-port" && i + 1 < argv.length) {
-      dashboardPort = parseInt(argv[++i], 10);
+      dashboardPort = validatePort(argv[++i], "dashboard-port");
     } else if (arg === "--auto-save") {
       autoSave = true;
     } else if (arg === "--help" || arg === "-h") {
@@ -50,11 +64,11 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number; dashboar
           "Options:",
           "  --mode <full|essential|dynamic|vrchat>  Tool exposure mode (default: full)",
           "  --transport <stdio|sse>          MCP transport (default: stdio)",
-          "  --sse-port <port>                SSE server port (default: 19820)",
-          "  --http-port <port>               HTTP API port (default: 19810)",
+          `  --sse-port <port>                SSE server port (default: ${DEFAULT_SSE_PORT})`,
+          `  --http-port <port>               HTTP API port (default: ${DEFAULT_HTTP_PORT})`,
           "  --project-path <path>            Project directory for version control",
           "  --auto-save                      Auto-save on transaction commit",
-          "  --dashboard-port <port>          Dashboard web UI port (default: 19821)",
+          `  --dashboard-port <port>          Dashboard web UI port (default: ${DEFAULT_DASHBOARD_PORT})`,
           "  --godot-port <port>              Godot adapter port (default: 19802)",
           "  --help, -h                       Show this help message",
           "",
@@ -77,7 +91,7 @@ async function main(): Promise<void> {
   const { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, dashboard, start } =
     createOpenForgeServer(options);
 
-  createHttpServer(registry, router, unityAdapter, blenderAdapter, options.httpPort);
+  createHttpServer(registry, router, unityAdapter, blenderAdapter, options.httpPort, godotAdapter);
 
   dashboard.start(options.dashboardPort);
 

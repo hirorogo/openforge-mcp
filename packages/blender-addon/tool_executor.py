@@ -8,52 +8,11 @@ All functions in this module are expected to run in Blender's main thread
 (dispatched via the server's bpy.app.timers callback).
 """
 
+import importlib
+import pkgutil
 import traceback
+from pathlib import Path
 from typing import Any, Callable, Dict
-
-from .tools import (
-    accessory_tools,
-    animation_tools,
-    animation_advanced_tools,
-    armature_tools,
-    armature_advanced_tools,
-    avatar_tools,
-    bake_tools,
-    batch_tools,
-    body_shape_tools,
-    camera_tools,
-    cloth_fitting_tools,
-    collection_tools,
-    game_asset_tools,
-    hunyuan3d_tools,
-    import_export_tools,
-    inspection_tools,
-    lighting_tools,
-    material_tools,
-    material_advanced_tools,
-    mesh_repair_tools,
-    mesh_tools,
-    mesh_advanced_tools,
-    modifier_advanced_tools,
-    modifier_extended_tools,
-    node_tools,
-    object_tools,
-    polyhaven_tools,
-    procedural_tools,
-    python_exec_tools,
-    render_tools,
-    scene_tools,
-    screenshot_tools,
-    sculpt_tools,
-    shape_key_tools,
-    sketchfab_tools,
-    texture_tools,
-    uv_tools,
-    uv_advanced_tools,
-    vrm_export_tools,
-    vrm_tools,
-    weight_paint_tools,
-)
 
 # ---------------------------------------------------------------------------
 # Registry
@@ -72,47 +31,13 @@ def _register_module_tools(module: Any) -> None:
 
 def _build_registry() -> None:
     _registry.clear()
-    _register_module_tools(object_tools)
-    _register_module_tools(mesh_tools)
-    _register_module_tools(material_tools)
-    _register_module_tools(screenshot_tools)
-    _register_module_tools(scene_tools)
-    _register_module_tools(animation_tools)
-    _register_module_tools(uv_tools)
-    _register_module_tools(render_tools)
-    _register_module_tools(armature_tools)
-    _register_module_tools(vrm_tools)
-    _register_module_tools(lighting_tools)
-    _register_module_tools(camera_tools)
-    _register_module_tools(sculpt_tools)
-    _register_module_tools(texture_tools)
-    _register_module_tools(node_tools)
-    _register_module_tools(import_export_tools)
-    _register_module_tools(modifier_advanced_tools)
-    _register_module_tools(mesh_advanced_tools)
-    _register_module_tools(animation_advanced_tools)
-    _register_module_tools(armature_advanced_tools)
-    _register_module_tools(modifier_extended_tools)
-    _register_module_tools(uv_advanced_tools)
-    _register_module_tools(material_advanced_tools)
-    _register_module_tools(bake_tools)
-    _register_module_tools(batch_tools)
-    _register_module_tools(game_asset_tools)
-    _register_module_tools(inspection_tools)
-    _register_module_tools(mesh_repair_tools)
-    _register_module_tools(procedural_tools)
-    _register_module_tools(collection_tools)
-    _register_module_tools(accessory_tools)
-    _register_module_tools(avatar_tools)
-    _register_module_tools(body_shape_tools)
-    _register_module_tools(cloth_fitting_tools)
-    _register_module_tools(shape_key_tools)
-    _register_module_tools(weight_paint_tools)
-    _register_module_tools(vrm_export_tools)
-    _register_module_tools(polyhaven_tools)
-    _register_module_tools(sketchfab_tools)
-    _register_module_tools(python_exec_tools)
-    _register_module_tools(hunyuan3d_tools)
+    tools_dir = Path(__file__).parent / "tools"
+
+    for finder, name, ispkg in pkgutil.iter_modules([str(tools_dir)]):
+        if name.startswith("_"):
+            continue
+        module = importlib.import_module(f".tools.{name}", package=__package__)
+        _register_module_tools(module)
 
 
 # Build on import so the registry is ready when the server starts.

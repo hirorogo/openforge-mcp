@@ -1,6 +1,10 @@
 import * as os from "node:os";
 import * as path from "node:path";
 import * as fs from "node:fs";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export type ClientName = "claude-desktop" | "cursor" | "vscode" | "lmstudio";
 
@@ -27,6 +31,9 @@ export function getClientConfigPath(client: ClientName): string {
     case "claude-desktop": {
       if (platform === "darwin") {
         return path.join(home, "Library", "Application Support", "Claude", "claude_desktop_config.json");
+      }
+      if (platform === "linux") {
+        return path.join(home, ".config", "Claude", "claude_desktop_config.json");
       }
       // Windows
       const appData = process.env.APPDATA || path.join(home, "AppData", "Roaming");

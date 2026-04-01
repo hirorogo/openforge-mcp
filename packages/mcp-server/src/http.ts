@@ -34,39 +34,57 @@ class RequestQueue {
   }
 }
 
+const MAX_BODY_SIZE = 1024 * 1024; // 1MB
+
 function readBody(req: http.IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
-    req.on("data", (chunk: Buffer) => chunks.push(chunk));
+    let totalLength = 0;
+    req.on("data", (chunk: Buffer) => {
+      totalLength += chunk.length;
+      if (totalLength > MAX_BODY_SIZE) {
+        req.destroy();
+        reject(new Error("Payload Too Large"));
+        return;
+      }
+      chunks.push(chunk);
+    });
     req.on("end", () => resolve(Buffer.concat(chunks).toString("utf-8")));
     req.on("error", reject);
   });
 }
 
-function sendJson(res: http.ServerResponse, statusCode: number, data: unknown): void {
+const ALLOWED_ORIGINS = ['http://localhost', 'http://127.0.0.1'];
+
+function getAllowedOrigin(req: http.IncomingMessage): string | undefined {
+  const origin = req.headers.origin;
+  if (!origin) return undefined;
+  // Allow origins that exactly match or start with an allowed prefix followed by ':'
+  for (const allowed of ALLOWED_ORIGINS) {
+    if (origin === allowed || origin.startsWith(allowed + ':')) {
+      return origin;
+    }
+  }
+  return undefined;
+}
+
+function sendJson(res: http.ServerResponse, statusCode: number, data: unknown, req?: http.IncomingMessage): void {
   const body = JSON.stringify(data, null, 2);
-  res.writeHead(statusCode, {
+  const headers: Record<string, string | number> = {
     "Content-Type": "application/json",
     "Content-Length": Buffer.byteLength(body),
-    "Access-Control-Allow-Origin": "*",
-  });
+  };
+  const allowedOrigin = req ? getAllowedOrigin(req) : undefined;
+  if (allowedOrigin) {
+    headers["Access-Control-Allow-Origin"] = allowedOrigin;
+  }
+  res.writeHead(statusCode, headers);
   res.end(body);
 }
 
-function parsePath(url: string): { pathname: string; query: Record<string, string> } {
-  const qIndex = url.indexOf("?");
-  const pathname = qIndex === -1 ? url : url.substring(0, qIndex);
-  const query: Record<string, string> = {};
-  if (qIndex !== -1) {
-    const qs = url.substring(qIndex + 1);
-    for (const pair of qs.split("&")) {
-      const [key, val] = pair.split("=");
-      if (key) {
-        query[decodeURIComponent(key)] = decodeURIComponent(val ?? "");
-      }
-    }
-  }
-  return { pathname, query };
+function parseUrl(raw: string): { pathname: string; searchParams: URLSearchParams } {
+  const url = new URL(raw, `http://localhost`);
+  return { pathname: url.pathname, searchParams: url.searchParams };
 }
 
 export function createHttpServer(
@@ -75,41 +93,49 @@ export function createHttpServer(
   unityAdapter: UnityAdapter,
   blenderAdapter: BlenderAdapter,
   port: number = 19810,
+  godotAdapter?: GodotAdapter,
 ): http.Server {
   const queue = new RequestQueue();
 
   const httpServer = http.createServer((req, res) => {
     // CORS preflight
     if (req.method === "OPTIONS") {
-      res.writeHead(204, {
-        "Access-Control-Allow-Origin": "*",
+      const corsHeaders: Record<string, string> = {
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
         "Access-Control-Max-Age": "86400",
-      });
+      };
+      const allowedOrigin = getAllowedOrigin(req);
+      if (allowedOrigin) {
+        corsHeaders["Access-Control-Allow-Origin"] = allowedOrigin;
+      }
+      res.writeHead(204, corsHeaders);
       res.end();
       return;
     }
 
-    const { pathname } = parsePath(req.url ?? "/");
+    const { pathname, searchParams } = parseUrl(req.url ?? "/");
 
     if (req.method === "GET" && pathname === "/api/status") {
+      const connections: Record<string, boolean> = {
+        unity: unityAdapter.isConnected(),
+        blender: blenderAdapter.isConnected(),
+      };
+      if (godotAdapter) {
+        connections.godot = godotAdapter.isConnected();
+      }
       sendJson(res, 200, {
         mode: registry.getMode(),
-        connections: {
-          unity: unityAdapter.isConnected(),
-          blender: blenderAdapter.isConnected(),
-        },
+        connections,
         toolCount: registry.getTools().length,
-      });
+      }, req);
       return;
     }
 
     if (req.method === "GET" && pathname === "/api/categories") {
-      const { query } = parsePath(req.url ?? "/");
-      const target = query.target || undefined;
+      const target = searchParams.get("target") || undefined;
       const categories = registry.getCategories(target);
-      sendJson(res, 200, { mode: registry.getMode(), categories });
+      sendJson(res, 200, { mode: registry.getMode(), categories }, req);
       return;
     }
 
@@ -117,8 +143,7 @@ export function createHttpServer(
     const toolsMatch = pathname.match(/^\/api\/tools\/([^/]+)$/);
     if (req.method === "GET" && toolsMatch) {
       const category = decodeURIComponent(toolsMatch[1]);
-      const { query } = parsePath(req.url ?? "/");
-      const target = query.target || undefined;
+      const target = searchParams.get("target") || undefined;
       const tools = registry.getTools(target, category).map((t) => ({
         name: t.name,
         target: t.target,
@@ -126,7 +151,7 @@ export function createHttpServer(
         description: t.description,
         parameters: t.parameters,
       }));
-      sendJson(res, 200, { category, toolCount: tools.length, tools });
+      sendJson(res, 200, { category, toolCount: tools.length, tools }, req);
       return;
     }
 
@@ -138,7 +163,7 @@ export function createHttpServer(
           try {
             body = JSON.parse(bodyStr);
           } catch {
-            sendJson(res, 400, { success: false, error: "Invalid JSON in request body" });
+            sendJson(res, 400, { success: false, error: "Invalid JSON in request body" }, req);
             return;
           }
 
@@ -150,21 +175,25 @@ export function createHttpServer(
             sendJson(res, 400, {
               success: false,
               error: "Both 'target' and 'tool' fields are required in the request body",
-            });
+            }, req);
             return;
           }
 
           const result = await router.execute({ target, tool, args });
-          sendJson(res, result.success ? 200 : 422, result);
+          sendJson(res, result.success ? 200 : 422, result, req);
         } catch (err) {
           const message = err instanceof Error ? err.message : String(err);
-          sendJson(res, 500, { success: false, error: message });
+          if (message === "Payload Too Large") {
+            sendJson(res, 413, { success: false, error: "Payload Too Large" }, req);
+          } else {
+            sendJson(res, 500, { success: false, error: message }, req);
+          }
         }
       });
       return;
     }
 
-    sendJson(res, 404, { error: `Not found: ${req.method} ${pathname}` });
+    sendJson(res, 404, { error: `Not found: ${req.method} ${pathname}` }, req);
   });
 
   httpServer.listen(port, () => {
