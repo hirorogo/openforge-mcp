@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
         'setup/unity',
         'setup/blender',
         'setup/godot',
+        'setup/verify-connection',
         {
           type: 'category',
           label: 'AIクライアント別セットアップ',
