@@ -82,6 +82,7 @@ namespace OpenForge.Editor
             OpenForge.Editor.Tools.TemplateTools.Register();
             OpenForge.Editor.Tools.WeatherTools.Register();
             OpenForge.Editor.Tools.TimelineTools.Register();
+            OpenForge.Editor.Tools.MLAgentsTools.Register();
         }
 
         private static Dictionary<string, string> ParseParams(string json)

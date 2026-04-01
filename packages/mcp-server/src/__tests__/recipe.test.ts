@@ -226,7 +226,7 @@ steps:
 
     it("should execute steps in order", async () => {
       const callOrder: string[] = [];
-      unityAdapter.sendCommand.mockImplementation(async (method: string) => {
+      (unityAdapter.sendCommand as any).mockImplementation(async (method: string) => {
         callOrder.push(method);
         return { jsonrpc: "2.0" as const, id: 1, result: { status: "ok" } };
       });

@@ -20,7 +20,7 @@ function createMockAdapter() {
 }
 
 function mockSendCommand(adapter: ReturnType<typeof createMockAdapter>, responses: Record<string, unknown>) {
-  adapter.sendCommand.mockImplementation(async (method: string, _params?: Record<string, unknown>) => {
+  adapter.sendCommand.mockImplementation(async (method: string, _params?: Record<string, unknown>): Promise<any> => {
     if (method in responses) {
       return {
         jsonrpc: "2.0" as const,
@@ -291,7 +291,7 @@ describe("PlaytestManager", () => {
     });
 
     it("should return a failed report when entering play mode fails with RPC error", async () => {
-      adapter.sendCommand.mockImplementation(async (method: string) => {
+      adapter.sendCommand.mockImplementation(async (method: string): Promise<any> => {
         if (method === "playtest.is_playing") {
           return { jsonrpc: "2.0" as const, id: 1, result: { data: '{"isPlaying":false}' } };
         }
@@ -314,7 +314,7 @@ describe("PlaytestManager", () => {
     });
 
     it("should return a failed report when entering play mode throws", async () => {
-      adapter.sendCommand.mockImplementation(async (method: string) => {
+      adapter.sendCommand.mockImplementation(async (method: string): Promise<any> => {
         if (method === "playtest.is_playing") {
           return { jsonrpc: "2.0" as const, id: 1, result: { data: '{"isPlaying":false}' } };
         }
@@ -331,7 +331,7 @@ describe("PlaytestManager", () => {
     });
 
     it("should still produce a report when log collection fails", async () => {
-      adapter.sendCommand.mockImplementation(async (method: string) => {
+      adapter.sendCommand.mockImplementation(async (method: string): Promise<any> => {
         if (method === "playtest.is_playing") {
           return { jsonrpc: "2.0" as const, id: 1, result: { data: '{"isPlaying":false}' } };
         }

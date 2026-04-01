@@ -16,7 +16,11 @@ import { VersionControl } from "./version-control.js";
 import { TransactionManager } from "./transaction.js";
 import { Pipeline } from "./pipeline.js";
 import { RecipeEngine } from "./recipe.js";
+import { OperationLog } from "./operation-log.js";
+import { Dashboard } from "./dashboard.js";
 
+import { SafetyGuard, SafetyLevel } from "./safety.js";
+import { ExtensionManager } from "./extension.js";
 import { getCopilotToolManifest } from "./copilot.js";
 
 import unitySceneTools from "./tools/unity/scene.js";
@@ -40,6 +44,7 @@ import unityInputTools from "./tools/unity/input.js";
 import unityTemplateTools from "./tools/unity/template.js";
 import unityWeatherTools from "./tools/unity/weather.js";
 import unityTimelineTools from "./tools/unity/timeline.js";
+import unityMLAgentsTools from "./tools/unity/ml-agents.js";
 import blenderObjectTools from "./tools/blender/object.js";
 import blenderMeshTools from "./tools/blender/mesh.js";
 import blenderMaterialTools from "./tools/blender/material.js";
@@ -69,6 +74,10 @@ import versionControlToolDefs from "./tools/system/version-control.js";
 import transactionToolDefs from "./tools/system/transaction.js";
 import pipelineToolDefs from "./tools/system/pipeline.js";
 import recipeToolDefs from "./tools/system/recipe.js";
+import safetyToolDefs from "./tools/system/safety.js";
+import extensionToolDefs from "./tools/system/extension.js";
+import assetGenerationToolDefs from "./tools/system/asset-generation.js";
+import { AssetGeneration } from "./asset-generation.js";
 
 import http from "node:http";
 
@@ -91,10 +100,16 @@ export function createOpenForgeServer(options: ServerOptions): {
   transactionManager: TransactionManager;
   pipeline: Pipeline;
   recipeEngine: RecipeEngine;
+  safetyGuard: SafetyGuard;
+  extensionManager: ExtensionManager;
+  assetGeneration: AssetGeneration;
+  operationLog: OperationLog;
+  dashboard: Dashboard;
   start: () => Promise<void>;
 } {
   const registry = new ToolRegistry();
   registry.setMode(options.mode);
+  const operationLog = new OperationLog();
 
   // Register all tool definitions
   registry.registerTools(unitySceneTools);
@@ -118,6 +133,7 @@ export function createOpenForgeServer(options: ServerOptions): {
   registry.registerTools(unityTemplateTools);
   registry.registerTools(unityWeatherTools);
   registry.registerTools(unityTimelineTools);
+  registry.registerTools(unityMLAgentsTools);
   registry.registerTools(blenderObjectTools);
   registry.registerTools(blenderMeshTools);
   registry.registerTools(blenderMaterialTools);
@@ -147,6 +163,9 @@ export function createOpenForgeServer(options: ServerOptions): {
   registry.registerTools(transactionToolDefs);
   registry.registerTools(pipelineToolDefs);
   registry.registerTools(recipeToolDefs);
+  registry.registerTools(safetyToolDefs);
+  registry.registerTools(extensionToolDefs);
+  registry.registerTools(assetGenerationToolDefs);
 
   const unityAdapter = new UnityAdapter();
   const blenderAdapter = new BlenderAdapter();
@@ -165,6 +184,23 @@ export function createOpenForgeServer(options: ServerOptions): {
 
   const pipeline = new Pipeline(unityAdapter, blenderAdapter);
   const recipeEngine = new RecipeEngine(router, registry);
+
+  const safetyGuard = new SafetyGuard();
+  if (versionControl) {
+    safetyGuard.setVersionControl(versionControl);
+  }
+
+  const extensionManager = new ExtensionManager();
+  const assetGeneration = new AssetGeneration();
+
+  const dashboard = new Dashboard({
+    registry,
+    operationLog,
+    unityAdapter,
+    blenderAdapter,
+    godotAdapter,
+    transactionManager,
+  });
 
   const server = new Server(
     {
@@ -449,6 +485,144 @@ export function createOpenForgeServer(options: ServerOptions): {
             required: ["recipe"],
           },
         },
+        // Safety tools
+        {
+          name: "set_safety_level",
+          description: "Set the safety level for tool operations. 'cautious' requires confirmation for all modifications, 'balanced' only for destructive operations, 'fast' skips all confirmations.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              level: {
+                type: "string",
+                enum: ["cautious", "balanced", "fast"],
+                description: "Safety level to set.",
+              },
+            },
+            required: ["level"],
+          },
+        },
+        {
+          name: "get_safety_level",
+          description: "Get the current safety level.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {},
+            required: [],
+          },
+        },
+        {
+          name: "get_operation_classification",
+          description: "Get the safety classification of a tool (safe, destructive, or unknown).",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              tool: {
+                type: "string",
+                description: "The tool name to classify.",
+              },
+            },
+            required: ["tool"],
+          },
+        },
+        // Extension tools
+        {
+          name: "scan_extensions",
+          description: "Scan a project directory for user-defined OpenForge tool extensions.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              path: {
+                type: "string",
+                description: "Project directory path to scan. Defaults to the configured project path.",
+              },
+            },
+            required: [],
+          },
+        },
+        {
+          name: "list_extensions",
+          description: "List all discovered user-defined tool extensions.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {},
+            required: [],
+          },
+        },
+        {
+          name: "reload_extensions",
+          description: "Re-scan and reload all user-defined tool extensions from the project directory.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {},
+            required: [],
+          },
+        },
+        // Asset generation tools
+        {
+          name: "generate_3d_model",
+          description: "Generate a 3D model from a text description using an AI provider (Rodin, Meshy, or Tripo).",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              prompt: { type: "string", description: "Text description of the 3D model to generate." },
+              provider: { type: "string", enum: ["rodin", "meshy", "tripo"], description: "AI provider to use." },
+              format: { type: "string", enum: ["glb", "fbx", "obj"], description: "Output file format. Defaults to glb." },
+              polycount: { type: "number", description: "Target polygon count." },
+            },
+            required: ["prompt"],
+          },
+        },
+        {
+          name: "generate_texture",
+          description: "Generate a texture from a text description using an AI provider (Stable Diffusion or DALL-E).",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              prompt: { type: "string", description: "Text description of the texture to generate." },
+              provider: { type: "string", enum: ["stable-diffusion", "dall-e"], description: "AI provider to use." },
+              type: { type: "string", enum: ["albedo", "normal", "roughness", "pbr"], description: "Texture map type. Defaults to albedo." },
+              width: { type: "number", description: "Image width in pixels." },
+              height: { type: "number", description: "Image height in pixels." },
+            },
+            required: ["prompt"],
+          },
+        },
+        {
+          name: "generate_audio",
+          description: "Generate audio from a text description using an AI provider (Suno for music, ElevenLabs for SFX).",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              prompt: { type: "string", description: "Text description of the audio to generate." },
+              provider: { type: "string", enum: ["suno", "elevenlabs"], description: "AI provider to use." },
+              type: { type: "string", enum: ["music", "sfx"], description: "Audio type." },
+              duration: { type: "number", description: "Duration in seconds." },
+            },
+            required: ["prompt"],
+          },
+        },
+        {
+          name: "generate_skybox",
+          description: "Generate a 360-degree skybox from a text description using Blockade Labs.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              prompt: { type: "string", description: "Text description of the skybox environment." },
+              provider: { type: "string", enum: ["blockade"], description: "AI provider to use." },
+              style: { type: "string", description: "Skybox style ID." },
+            },
+            required: ["prompt"],
+          },
+        },
+        {
+          name: "get_generation_providers",
+          description: "Check which AI asset generation providers are configured with API keys.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {},
+            required: [],
+          },
+        },
         // Copilot tools
         {
           name: "get_copilot_manifest",
@@ -539,7 +713,42 @@ export function createOpenForgeServer(options: ServerOptions): {
           }
         }
 
+        // Safety guard check
+        const safetyCheck = safetyGuard.checkOperation(tool, toolArgs);
+        if (safetyCheck.requiresConfirmation) {
+          return {
+            content: [
+              {
+                type: "text" as const,
+                text: JSON.stringify({
+                  success: false,
+                  requiresConfirmation: true,
+                  reason: safetyCheck.reason,
+                  tool,
+                  target,
+                }, null, 2),
+              },
+            ],
+          };
+        }
+
+        // Pre-snapshot for destructive tools when not in fast mode
+        const classification = safetyGuard.classifyTool(tool);
+        if (classification === "destructive" && safetyGuard.getLevel() !== "fast") {
+          await safetyGuard.createPreSnapshot(tool);
+        }
+
+        const execStart = Date.now();
         const result = await router.execute({ target, tool, args: toolArgs });
+        operationLog.log({
+          tool,
+          target,
+          params: toolArgs,
+          success: result.success,
+          error: result.error,
+          timestamp: execStart,
+          duration: Date.now() - execStart,
+        });
         return {
           content: [
             {
@@ -864,6 +1073,202 @@ export function createOpenForgeServer(options: ServerOptions): {
         }
       }
 
+      // --- Safety tools ---
+
+      case "set_safety_level": {
+        const level = args?.level as string;
+        if (level !== "cautious" && level !== "balanced" && level !== "fast") {
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: 'Invalid level. Must be "cautious", "balanced", or "fast".' }) }],
+            isError: true,
+          };
+        }
+        safetyGuard.setLevel(level as SafetyLevel);
+        return {
+          content: [{ type: "text" as const, text: JSON.stringify({ success: true, level: safetyGuard.getLevel() }, null, 2) }],
+        };
+      }
+
+      case "get_safety_level": {
+        return {
+          content: [{ type: "text" as const, text: JSON.stringify({ success: true, level: safetyGuard.getLevel() }, null, 2) }],
+        };
+      }
+
+      case "get_operation_classification": {
+        const toolName = args?.tool as string;
+        if (!toolName) {
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: tool" }) }],
+            isError: true,
+          };
+        }
+        const toolClassification = safetyGuard.classifyTool(toolName);
+        return {
+          content: [{ type: "text" as const, text: JSON.stringify({ success: true, tool: toolName, classification: toolClassification }, null, 2) }],
+        };
+      }
+
+      // --- Extension tools ---
+
+      case "scan_extensions": {
+        const scanPath = (args?.path as string) || options.projectPath || process.cwd();
+        try {
+          const discovered = await extensionManager.scanForExtensions(scanPath);
+          extensionManager.registerDiscoveredTools(registry);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: true, count: discovered.length, extensions: discovered }, null, 2) }],
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      case "list_extensions": {
+        const extensions = extensionManager.getExtensions();
+        return {
+          content: [{ type: "text" as const, text: JSON.stringify({ success: true, count: extensions.length, extensions }, null, 2) }],
+        };
+      }
+
+      case "reload_extensions": {
+        const reloadPath = options.projectPath || process.cwd();
+        try {
+          const discovered = await extensionManager.scanForExtensions(reloadPath);
+          extensionManager.registerDiscoveredTools(registry);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: true, count: discovered.length, extensions: discovered }, null, 2) }],
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      // --- Asset generation tools ---
+
+      case "generate_3d_model": {
+        try {
+          const prompt = args?.prompt as string;
+          if (!prompt) {
+            return {
+              content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: prompt" }) }],
+              isError: true,
+            };
+          }
+          const result = await assetGeneration.generateMesh(prompt, {
+            provider: (args?.provider as any) || undefined,
+            format: (args?.format as string) || undefined,
+            polycount: (args?.polycount as number) || undefined,
+          });
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+            isError: !result.success,
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      case "generate_texture": {
+        try {
+          const prompt = args?.prompt as string;
+          if (!prompt) {
+            return {
+              content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: prompt" }) }],
+              isError: true,
+            };
+          }
+          const result = await assetGeneration.generateTexture(prompt, {
+            provider: (args?.provider as any) || undefined,
+            type: (args?.type as any) || undefined,
+            width: (args?.width as number) || undefined,
+            height: (args?.height as number) || undefined,
+          });
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+            isError: !result.success,
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      case "generate_audio": {
+        try {
+          const prompt = args?.prompt as string;
+          if (!prompt) {
+            return {
+              content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: prompt" }) }],
+              isError: true,
+            };
+          }
+          const result = await assetGeneration.generateAudio(prompt, {
+            provider: (args?.provider as any) || undefined,
+            type: (args?.type as any) || undefined,
+            duration: (args?.duration as number) || undefined,
+          });
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+            isError: !result.success,
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      case "generate_skybox": {
+        try {
+          const prompt = args?.prompt as string;
+          if (!prompt) {
+            return {
+              content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: prompt" }) }],
+              isError: true,
+            };
+          }
+          const result = await assetGeneration.generateSkybox(prompt, {
+            provider: (args?.provider as any) || undefined,
+            style: (args?.style as string) || undefined,
+          });
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+            isError: !result.success,
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      case "get_generation_providers": {
+        const status = assetGeneration.getProviderStatus();
+        return {
+          content: [{ type: "text" as const, text: JSON.stringify({ success: true, providers: status }, null, 2) }],
+        };
+      }
+
       // --- Copilot tools ---
 
       case "get_copilot_manifest": {
@@ -1099,5 +1504,5 @@ export function createOpenForgeServer(options: ServerOptions): {
     });
   };
 
-  return { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, versionControl, transactionManager, pipeline, recipeEngine, start };
+  return { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, versionControl, transactionManager, pipeline, recipeEngine, safetyGuard, extensionManager, assetGeneration, operationLog, dashboard, start };
 }

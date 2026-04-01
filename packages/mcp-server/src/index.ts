@@ -2,11 +2,12 @@ import { createOpenForgeServer, ServerOptions } from "./server.js";
 import { createHttpServer } from "./http.js";
 import { ToolMode } from "./registry.js";
 
-function parseArgs(argv: string[]): ServerOptions & { httpPort: number } {
+function parseArgs(argv: string[]): ServerOptions & { httpPort: number; dashboardPort: number } {
   let mode: ToolMode = "full";
   let transport: "stdio" | "sse" = "stdio";
   let ssePort = 19820;
   let httpPort = 19810;
+  let dashboardPort = 19821;
   let projectPath: string | undefined;
   let autoSave = false;
 
@@ -35,6 +36,8 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number } {
     } else if (arg === "--godot-port" && i + 1 < argv.length) {
       // Godot adapter port is passed via environment variable
       process.env.OPENFORGE_GODOT_PORT = argv[++i];
+    } else if (arg === "--dashboard-port" && i + 1 < argv.length) {
+      dashboardPort = parseInt(argv[++i], 10);
     } else if (arg === "--auto-save") {
       autoSave = true;
     } else if (arg === "--help" || arg === "-h") {
@@ -51,6 +54,7 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number } {
           "  --http-port <port>               HTTP API port (default: 19810)",
           "  --project-path <path>            Project directory for version control",
           "  --auto-save                      Auto-save on transaction commit",
+          "  --dashboard-port <port>          Dashboard web UI port (default: 19821)",
           "  --godot-port <port>              Godot adapter port (default: 19802)",
           "  --help, -h                       Show this help message",
           "",
@@ -60,7 +64,7 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number } {
     }
   }
 
-  return { mode, transport, ssePort, httpPort, projectPath, autoSave };
+  return { mode, transport, ssePort, httpPort, dashboardPort, projectPath, autoSave };
 }
 
 async function main(): Promise<void> {
@@ -70,10 +74,12 @@ async function main(): Promise<void> {
     `Starting OpenForge MCP Server (mode=${options.mode}, transport=${options.transport})\n`,
   );
 
-  const { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, start } =
+  const { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, dashboard, start } =
     createOpenForgeServer(options);
 
   createHttpServer(registry, router, unityAdapter, blenderAdapter, options.httpPort);
+
+  dashboard.start(options.dashboardPort);
 
   await start();
 
@@ -81,6 +87,7 @@ async function main(): Promise<void> {
 
   const shutdown = async (): Promise<void> => {
     process.stderr.write("Shutting down...\n");
+    dashboard.stop();
     await unityAdapter.disconnect();
     await blenderAdapter.disconnect();
     await godotAdapter.disconnect();

@@ -61,7 +61,7 @@ export function getCopilotToolManifest(registry: ToolRegistry): CopilotToolManif
 
   const dynamicBaseKeys = registry.getDynamicBaseTools();
 
-  const tools: CopilotToolEntry[] = toolsToExpose.map((tool) => {
+  const tools: CopilotToolEntry[] = toolsToExpose.map((tool): CopilotToolEntry => {
     const key = `${tool.target}:${tool.name}`;
     const isDynamicLoad =
       mode === "dynamic" && !dynamicBaseKeys.has(key);
@@ -71,7 +71,7 @@ export function getCopilotToolManifest(registry: ToolRegistry): CopilotToolManif
       description: tool.description,
       category: tool.category,
       target: tool.target,
-      parameters: tool.parameters,
+      parameters: tool.parameters as unknown as Record<string, unknown>,
       dynamicLoad: isDynamicLoad,
     };
   });
