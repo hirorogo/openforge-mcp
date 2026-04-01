@@ -1,5 +1,5 @@
 {
-  "name": "@openforge/mcp-server",
+  "name": "openforge-mcp",
   "version": "0.0.1",
   "description": "MCP server for Unity and Blender AI control",
   "license": "MIT",

@@ -158,7 +158,7 @@ export function createOpenForgeServer(options: ServerOptions): {
     return { resources: getResourceDefinitions() };
   });
 
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  server.setRequestHandler(ReadResourceRequestSchema, async (request): Promise<any> => {
     const { uri } = request.params;
     const handler = resourceHandlers.get(uri);
     if (!handler) {
