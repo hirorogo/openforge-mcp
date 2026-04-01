@@ -148,3 +148,19 @@ AIは作業の結果を自分で確認できます。たとえば「このオブ
 OpenForge MCP は**完全に無料**で、これからもずっと無料です。MIT ライセンスというオープンソースのライセンスで公開されています。これは「誰でも自由に使っていいですよ」という意味です。商用利用も可能です。
 
 準備ができたら、次の「[インストール](./setup/install.md)」ページに進みましょう。
+
+---
+
+## どこから読めばいい?
+
+| やりたいこと | おすすめページ |
+|------------|-------------|
+| まずは触ってみたい | [はじめての操作](./tutorials/first-steps.md) |
+| Unity で使いたい | [Unity での使い方](./usage/unity-usage.md) |
+| Blender で使いたい | [Blender での使い方](./usage/blender-usage.md) |
+| VRChat のワールド/アバターを作りたい | [VRChat モード概要](./vrchat/overview.md) |
+| 学生で無料で始めたい | [学生は完全無料で始められる](./guides/student-free.md) |
+| 全ツールを確認したい | [ツールエクスプローラー](./reference/tool-explorer.md) |
+| 上級者向けの使い方を知りたい | [上級チュートリアル](./tutorials/advanced/custom-pipeline.md) |
+| 開発に参加したい | [開発ガイド](./contributing/overview.md) |
+| 全ページを見たい | [全ページ一覧](./sitemap.md) |

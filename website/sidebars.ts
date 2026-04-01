@@ -3,6 +3,18 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   guideSidebar: [
     'intro',
+    'sitemap',
+    {
+      type: 'category',
+      label: '準備 (はじめての方)',
+      items: [
+        'setup/prerequisites/node-install',
+        'setup/prerequisites/unity-install',
+        'setup/prerequisites/blender-install',
+        'setup/prerequisites/godot-install',
+        'setup/prerequisites/terminal-basics',
+      ],
+    },
     {
       type: 'category',
       label: 'インストール',
@@ -11,7 +23,19 @@ const sidebars: SidebarsConfig = {
         'setup/unity',
         'setup/blender',
         'setup/godot',
-        'setup/ai-clients',
+        {
+          type: 'category',
+          label: 'AIクライアント別セットアップ',
+          items: [
+            'setup/clients/claude-desktop',
+            'setup/clients/cursor',
+            'setup/clients/vscode',
+            'setup/clients/claude-code',
+            'setup/clients/gemini-cli',
+            'setup/clients/lm-studio',
+            'setup/clients/ollama',
+          ],
+        },
       ],
     },
     {
@@ -27,6 +51,59 @@ const sidebars: SidebarsConfig = {
         'tutorials/physics-playground',
         'tutorials/avatar-editing',
         'tutorials/ai-playtest',
+        'tutorials/animation-basics',
+        'tutorials/lighting-scene',
+        'tutorials/terrain-world',
+        'tutorials/ui-design',
+        'tutorials/sound-design',
+        'tutorials/version-control-advanced',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'VRChat',
+      items: [
+        'vrchat/overview',
+        'vrchat/world-creation',
+        'vrchat/avatar-setup',
+        'vrchat/outfit-change',
+        'vrchat/expressions',
+        'vrchat/physbone',
+        'vrchat/texture-editing',
+        'vrchat/optimization',
+        'vrchat/upload',
+        'vrchat/recipes',
+      ],
+    },
+    {
+      type: 'category',
+      label: '上級チュートリアル',
+      items: [
+        'tutorials/advanced/custom-pipeline',
+        'tutorials/advanced/goap-ai-system',
+        'tutorials/advanced/shader-workflow',
+        'tutorials/advanced/multiplayer-setup',
+        'tutorials/advanced/performance-optimization',
+        'tutorials/advanced/game-studios-workflow',
+      ],
+    },
+    {
+      type: 'category',
+      label: '使い方',
+      items: [
+        'usage/basic-commands',
+        'usage/unity-usage',
+        'usage/blender-usage',
+        'usage/godot-usage',
+        'usage/vrchat-usage',
+        'usage/tips-tricks',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'ガイド',
+      items: [
+        'guides/student-free',
       ],
     },
     {

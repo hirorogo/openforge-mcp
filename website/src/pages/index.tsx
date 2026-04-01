@@ -271,6 +271,83 @@ function AIClients() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Documentation hub                                                  */
+/* ------------------------------------------------------------------ */
+function DocsHub() {
+  const sections = [
+    {
+      title: 'はじめての方',
+      links: [
+        {label: 'Node.js のインストール', to: '/docs/setup/prerequisites/node-install'},
+        {label: 'Unity のインストール', to: '/docs/setup/prerequisites/unity-install'},
+        {label: 'Blender のインストール', to: '/docs/setup/prerequisites/blender-install'},
+        {label: 'ターミナルの使い方', to: '/docs/setup/prerequisites/terminal-basics'},
+        {label: 'OpenForge のセットアップ', to: '/docs/setup/install'},
+      ],
+    },
+    {
+      title: '使い方',
+      links: [
+        {label: '基本的な使い方', to: '/docs/usage/basic-commands'},
+        {label: 'Unity での操作一覧', to: '/docs/usage/unity-usage'},
+        {label: 'Blender での操作一覧', to: '/docs/usage/blender-usage'},
+        {label: 'VRChat モード', to: '/docs/usage/vrchat-usage'},
+        {label: '便利なコツ', to: '/docs/usage/tips-tricks'},
+      ],
+    },
+    {
+      title: 'チュートリアル',
+      links: [
+        {label: 'はじめての操作', to: '/docs/tutorials/first-steps'},
+        {label: 'シーン構築', to: '/docs/tutorials/scene-building'},
+        {label: 'Blender モデリング', to: '/docs/tutorials/modeling'},
+        {label: 'Blender→Unity 連携', to: '/docs/tutorials/cross-app'},
+        {label: 'アニメーション', to: '/docs/tutorials/animation-basics'},
+        {label: '上級: GOAP AI', to: '/docs/tutorials/advanced/goap-ai-system'},
+      ],
+    },
+    {
+      title: 'VRChat',
+      links: [
+        {label: 'VRChat モード概要', to: '/docs/vrchat/overview'},
+        {label: 'ワールド制作', to: '/docs/vrchat/world-creation'},
+        {label: 'アバターセットアップ', to: '/docs/vrchat/avatar-setup'},
+        {label: '衣装の着せ替え', to: '/docs/vrchat/outfit-change'},
+        {label: '揺れ骨の設定', to: '/docs/vrchat/physbone'},
+        {label: 'パフォーマンス最適化', to: '/docs/vrchat/optimization'},
+      ],
+    },
+  ];
+
+  return (
+    <section style={{padding: '4rem 0'}}>
+      <div className="container">
+        <Heading as="h2" style={{textAlign: 'center', marginBottom: '0.5rem'}}>
+          ドキュメント
+        </Heading>
+        <p style={{textAlign: 'center', color: 'var(--ifm-color-emphasis-600)', marginBottom: '2.5rem'}}>
+          やりたいことから探せます -- <Link to="/docs/sitemap">全ページ一覧</Link>
+        </p>
+        <div className="row">
+          {sections.map((sec, i) => (
+            <div className="col col--3" key={i} style={{marginBottom: '1.5rem'}}>
+              <h3 style={{fontSize: '1.05rem', marginBottom: '0.75rem', paddingBottom: '0.5rem', borderBottom: '2px solid var(--ifm-color-primary)'}}>{sec.title}</h3>
+              <ul style={{listStyle: 'none', padding: 0, margin: 0}}>
+                {sec.links.map((link, j) => (
+                  <li key={j} style={{marginBottom: '0.4rem'}}>
+                    <Link to={link.to} style={{fontSize: '0.9rem'}}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Install CTA                                                        */
 /* ------------------------------------------------------------------ */
 function InstallCTA() {
@@ -321,6 +398,7 @@ export default function Home(): ReactNode {
         <Numbers />
         <ToolsOverview />
         <AIClients />
+        <DocsHub />
         <InstallCTA />
       </main>
     </Layout>
