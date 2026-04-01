@@ -2,11 +2,21 @@
  * GameStudiosBridge -- Integration layer between OpenForge MCP and
  * Claude-Code-Game-Studios (https://github.com/Donchitos/Claude-Code-Game-Studios).
  *
+ * Claude-Code-Game-Studios is created by Donchitos and licensed under the MIT License.
+ * See: https://github.com/Donchitos/Claude-Code-Game-Studios/blob/main/LICENSE
+ *
  * This module maps Game Studios' 48 specialized AI agents to the relevant
  * OpenForge MCP tool categories so that each agent only sees the tools it
  * needs.  It also provides helpers to generate config files, permission
  * lists, and workflow definitions.
+ *
+ * Dynamic sync: The bridge can discover agents from a local project or
+ * from the GitHub repository and auto-map them to tool categories based
+ * on keywords in their descriptions.
  */
+
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -113,6 +123,113 @@ function allCategories(): string[] {
     ...BLENDER_CATEGORIES.map((c) => `blender:${c}`),
     ...GODOT_CATEGORIES.map((c) => `godot:${c}`),
   ];
+}
+
+// ---------------------------------------------------------------------------
+// Keyword -> category auto-mapping rules
+// ---------------------------------------------------------------------------
+
+const KEYWORD_CATEGORY_RULES: Array<{ keywords: string[]; categories: string[] }> = [
+  {
+    keywords: ["art", "visual", "material", "shader", "texture"],
+    categories: ["unity:material", "unity:lighting", "unity:vfx", "blender:material", "blender:material_advanced"],
+  },
+  {
+    keywords: ["code", "script", "program"],
+    categories: [
+      "unity:script",
+      "unity:physics",
+      "unity:animation",
+      "unity:gameobject",
+      "unity:prefab",
+      "unity:template",
+      "unity:ui",
+      "unity:input",
+      "godot:node",
+      "godot:resource",
+    ],
+  },
+  {
+    keywords: ["level", "scene", "terrain", "environment"],
+    categories: ["unity:scene", "unity:gameobject", "unity:terrain", "godot:node", "godot:resource"],
+  },
+  {
+    keywords: ["audio", "sound", "music"],
+    categories: ["unity:audio"],
+  },
+  {
+    keywords: ["test", "qa", "quality", "bug"],
+    categories: ["unity:playtest", "unity:optimization", "unity:camera"],
+  },
+  {
+    keywords: ["ui", "ux", "interface", "menu"],
+    categories: ["unity:ui"],
+  },
+  {
+    keywords: ["ai", "behavior", "npc", "pathfind"],
+    categories: ["unity:navmesh", "unity:ml-agents", "unity:script"],
+  },
+  {
+    keywords: ["animation", "motion", "rig"],
+    categories: [
+      "unity:animation",
+      "unity:timeline",
+      "blender:animation_advanced",
+      "blender:armature_advanced",
+    ],
+  },
+  {
+    keywords: ["model", "mesh", "3d", "sculpt"],
+    categories: [
+      "blender:object",
+      "blender:mesh",
+      "blender:mesh_advanced",
+      "blender:modifier_extended",
+      "blender:procedural",
+    ],
+  },
+  {
+    keywords: ["build", "deploy", "release", "package"],
+    categories: ["unity:build", "unity:optimization"],
+  },
+  {
+    keywords: ["camera", "cine"],
+    categories: ["unity:camera"],
+  },
+  {
+    keywords: ["physics", "collision", "rigid"],
+    categories: ["unity:physics"],
+  },
+];
+
+const DEFAULT_CATEGORIES = [
+  "unity:scene",
+  "unity:gameobject",
+  "unity:material",
+  "unity:script",
+];
+
+/**
+ * Given a text description, return tool categories inferred from keyword
+ * matches.  Falls back to DEFAULT_CATEGORIES when no keywords match.
+ */
+export function autoMapCategories(description: string): string[] {
+  const lower = description.toLowerCase();
+  const matched = new Set<string>();
+  for (const rule of KEYWORD_CATEGORY_RULES) {
+    for (const kw of rule.keywords) {
+      if (lower.includes(kw)) {
+        for (const cat of rule.categories) {
+          matched.add(cat);
+        }
+        break; // one keyword match per rule is enough
+      }
+    }
+  }
+  if (matched.size === 0) {
+    return [...DEFAULT_CATEGORIES];
+  }
+  return [...matched];
 }
 
 // ---------------------------------------------------------------------------

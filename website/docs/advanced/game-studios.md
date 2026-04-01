@@ -5,9 +5,13 @@ title: Game Studios 連携
 
 # Claude Code Game Studios 連携
 
-[Claude Code Game Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) は、48 種類の専門 AI エージェントと 37 個のスラッシュコマンドを使って、Claude Code をゲーム開発スタジオに変えるプロジェクトです。
+[Claude Code Game Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) は、Donchitos氏が開発した、48 種類の専門 AI エージェントと 37 個のスラッシュコマンドを使って Claude Code をゲーム開発スタジオに変えるプロジェクトです (MIT License)。
 
 OpenForge MCP と連携すると、各エージェントが Unity / Blender / Godot を**直接操作**できるようになります。レベルデザイナーが地形を配置し、アートディレクターがライティングを調整し、QA テスターがプレイテストを走らせる -- すべて AI の会話の中だけで完結します。
+
+:::info ライセンス
+Claude Code Game Studios は Donchitos 氏により MIT License で公開されています。OpenForge MCP は同プロジェクトのエージェント定義を参照して連携しますが、フォークやコピーではありません。
+:::
 
 ---
 
