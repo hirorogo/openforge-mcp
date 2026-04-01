@@ -544,6 +544,18 @@ export function getToolDefinitions(): Array<{
         required: ["workflow"],
       },
     },
+    {
+      name: "sync_game_studios",
+      description: "Synchronize Game Studios agent definitions from a local project or from GitHub.",
+      inputSchema: {
+        type: "object" as const,
+        properties: {
+          source: { type: "string", enum: ["local", "github"], description: 'Sync source: "local" or "github".' },
+          projectPath: { type: "string", description: 'Project directory path (required when source is "local").' },
+        },
+        required: ["source"],
+      },
+    },
   ];
 }
 
@@ -1006,8 +1018,10 @@ export function createToolHandlers(deps: ToolHandlerDeps): Map<string, ToolHandl
       if (engine !== "unity" && engine !== "blender" && engine !== "godot") {
         return wrapError('Invalid engine. Must be "unity", "blender", or "godot".');
       }
+      // Auto-sync from local project if a projectPath is provided
+      const syncResult = await gameStudiosBridge.syncFromRepo(gsProjectPath);
       const config = gameStudiosBridge.generateStudioConfig(engine);
-      return wrapToolResult({ success: true, projectPath: gsProjectPath, engine, config });
+      return wrapToolResult({ success: true, projectPath: gsProjectPath, engine, config, sync: syncResult });
     } catch (err) {
       return wrapError(extractErrorMessage(err));
     }
@@ -1062,6 +1076,38 @@ export function createToolHandlers(deps: ToolHandlerDeps): Map<string, ToolHandl
       steps: workflow.steps,
       params: workflowParams,
     });
+  });
+
+  handlers.set("sync_game_studios", async (args) => {
+    try {
+      const source = args?.source as "local" | "github";
+      if (source !== "local" && source !== "github") {
+        return wrapError('Invalid source. Must be "local" or "github".');
+      }
+      if (source === "local") {
+        const gsProjectPath = args?.projectPath as string;
+        if (!gsProjectPath) {
+          return wrapError('Missing required parameter: projectPath (required when source is "local")');
+        }
+        const result = await gameStudiosBridge.syncFromRepo(gsProjectPath);
+        return wrapToolResult({
+          success: true,
+          ...result,
+          isSynced: gameStudiosBridge.isSynced(),
+          totalAgents: gameStudiosBridge.getAgentRoles().length,
+        });
+      }
+      // source === "github"
+      const result = await gameStudiosBridge.syncFromGitHub();
+      return wrapToolResult({
+        success: true,
+        ...result,
+        isSynced: gameStudiosBridge.isSynced(),
+        totalAgents: gameStudiosBridge.getAgentRoles().length,
+      });
+    } catch (err) {
+      return wrapError(extractErrorMessage(err));
+    }
   });
 
   return handlers;

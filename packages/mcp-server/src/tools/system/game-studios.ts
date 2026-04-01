@@ -77,6 +77,30 @@ const gameStudiosTools: ToolDefinition[] = [
       required: ["workflow"],
     },
   },
+  {
+    name: "sync_game_studios",
+    description:
+      "Synchronize Game Studios agent definitions from a local project or from GitHub. Discovers agent files in .claude/agents/ and auto-maps them to OpenForge tool categories based on keywords in their descriptions.",
+    category: "game-studios",
+    target: "unity",
+    parameters: {
+      type: "object",
+      properties: {
+        source: {
+          type: "string",
+          enum: ["local", "github"],
+          description:
+            'Where to sync from: "local" scans a project directory, "github" fetches from the Game Studios repository.',
+        },
+        projectPath: {
+          type: "string",
+          description:
+            'Absolute path to the Game Studios project directory. Required when source is "local".',
+        },
+      },
+      required: ["source"],
+    },
+  },
 ];
 
 export default gameStudiosTools;

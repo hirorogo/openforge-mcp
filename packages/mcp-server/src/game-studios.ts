@@ -612,17 +612,187 @@ const BUILTIN_WORKFLOWS: Record<string, WorkflowDefinition> = {
 };
 
 // ---------------------------------------------------------------------------
+// GitHub API cache duration: 1 hour
+// ---------------------------------------------------------------------------
+
+const GITHUB_CACHE_TTL_MS = 60 * 60 * 1000;
+
+const GITHUB_AGENTS_API_URL =
+  "https://api.github.com/repos/Donchitos/Claude-Code-Game-Studios/contents/.claude/agents";
+
+// ---------------------------------------------------------------------------
+// Additional exported types for sync results
+// ---------------------------------------------------------------------------
+
+export interface SyncResult {
+  source: "local" | "github";
+  agentsDiscovered: number;
+  agentNames: string[];
+  timestamp: number;
+}
+
+// ---------------------------------------------------------------------------
 // GameStudiosBridge
 // ---------------------------------------------------------------------------
 
 export class GameStudiosBridge {
+  /** Dynamic agent mappings discovered at runtime. */
+  private _dynamicMappings: AgentToolMapping[] = [];
+  /** Timestamp of the last successful sync (epoch ms), or null if never synced. */
+  private _lastSyncTime: number | null = null;
+
+  // -------------------------------------------------------------------------
+  // Dynamic sync
+  // -------------------------------------------------------------------------
+
+  /**
+   * Scan a local Game Studios project directory for agent definition files
+   * (.claude/agents/*.md) and auto-map them to OpenForge tool categories.
+   */
+  async syncFromRepo(projectPath: string): Promise<SyncResult> {
+    const agentsDir = path.join(projectPath, ".claude", "agents");
+    let files: string[];
+    try {
+      const entries = fs.readdirSync(agentsDir);
+      files = entries.filter((f) => f.endsWith(".md"));
+    } catch {
+      // Directory does not exist or is not readable -- keep static fallback
+      return {
+        source: "local",
+        agentsDiscovered: 0,
+        agentNames: [],
+        timestamp: Date.now(),
+      };
+    }
+
+    const discovered: AgentToolMapping[] = [];
+    for (const file of files) {
+      const filePath = path.join(agentsDir, file);
+      const content = fs.readFileSync(filePath, "utf-8");
+      const parsed = this._parseAgentFile(file, content);
+      if (parsed) {
+        discovered.push(parsed);
+      }
+    }
+
+    this._mergeDynamic(discovered);
+    this._lastSyncTime = Date.now();
+
+    return {
+      source: "local",
+      agentsDiscovered: discovered.length,
+      agentNames: discovered.map((d) => d.agent),
+      timestamp: this._lastSyncTime,
+    };
+  }
+
+  /**
+   * Fetch the agent list from the GitHub API and auto-map discovered agents
+   * to tool categories.  Results are cached for 1 hour.
+   */
+  async syncFromGitHub(): Promise<SyncResult> {
+    // Honour the cache window
+    if (
+      this._lastSyncTime !== null &&
+      Date.now() - this._lastSyncTime < GITHUB_CACHE_TTL_MS
+    ) {
+      return {
+        source: "github",
+        agentsDiscovered: this._dynamicMappings.length,
+        agentNames: this._dynamicMappings.map((d) => d.agent),
+        timestamp: this._lastSyncTime,
+      };
+    }
+
+    let dirListing: Array<{ name: string; download_url: string }>;
+    try {
+      const dirRes = await fetch(GITHUB_AGENTS_API_URL, {
+        headers: { Accept: "application/vnd.github.v3+json" },
+      });
+      if (dirRes.status === 403 || dirRes.status === 429) {
+        // Rate limited -- keep whatever we have
+        return {
+          source: "github",
+          agentsDiscovered: this._dynamicMappings.length,
+          agentNames: this._dynamicMappings.map((d) => d.agent),
+          timestamp: this._lastSyncTime ?? Date.now(),
+        };
+      }
+      if (!dirRes.ok) {
+        return {
+          source: "github",
+          agentsDiscovered: 0,
+          agentNames: [],
+          timestamp: Date.now(),
+        };
+      }
+      dirListing = (await dirRes.json()) as Array<{
+        name: string;
+        download_url: string;
+      }>;
+    } catch {
+      return {
+        source: "github",
+        agentsDiscovered: 0,
+        agentNames: [],
+        timestamp: Date.now(),
+      };
+    }
+
+    const mdFiles = dirListing.filter((f) => f.name.endsWith(".md"));
+    const discovered: AgentToolMapping[] = [];
+
+    for (const entry of mdFiles) {
+      try {
+        const contentRes = await fetch(entry.download_url);
+        if (!contentRes.ok) continue;
+        const content = await contentRes.text();
+        const parsed = this._parseAgentFile(entry.name, content);
+        if (parsed) {
+          discovered.push(parsed);
+        }
+      } catch {
+        // Skip files that fail to fetch
+      }
+    }
+
+    this._mergeDynamic(discovered);
+    this._lastSyncTime = Date.now();
+
+    return {
+      source: "github",
+      agentsDiscovered: discovered.length,
+      agentNames: discovered.map((d) => d.agent),
+      timestamp: this._lastSyncTime,
+    };
+  }
+
+  /**
+   * Return epoch-ms timestamp of the last successful sync, or null.
+   */
+  getLastSyncTime(): number | null {
+    return this._lastSyncTime;
+  }
+
+  /**
+   * Return true when dynamic data has been loaded (as opposed to
+   * relying purely on the static fallback).
+   */
+  isSynced(): boolean {
+    return this._lastSyncTime !== null && this._dynamicMappings.length > 0;
+  }
+
+  // -------------------------------------------------------------------------
+  // Config / permissions / workflows (existing API, now dynamic-aware)
+  // -------------------------------------------------------------------------
+
   /**
    * Generate a .claude/settings.json snippet that adds OpenForge MCP as a
    * tool source for all Game Studios agents.
    */
   generateStudioConfig(engineType: EngineType): StudioConfig {
     const permissions: Record<string, string[]> = {};
-    for (const mapping of AGENT_TOOL_MAP) {
+    for (const mapping of this._allMappings()) {
       const filtered = mapping.categories.filter((cat) => {
         const [engine] = cat.split(":");
         if (engineType === "unity") {
@@ -654,9 +824,10 @@ export class GameStudiosBridge {
 
   /**
    * Return the full agent -> tool category mapping table.
+   * Includes both static and dynamically discovered agents.
    */
   getAgentToolMapping(): AgentToolMapping[] {
-    return [...AGENT_TOOL_MAP];
+    return [...this._allMappings()];
   }
 
   /**
@@ -664,7 +835,7 @@ export class GameStudiosBridge {
    * Returns null if the agent role is unknown.
    */
   generateAgentPermissions(agentRole: string): AgentPermission | null {
-    const mapping = AGENT_TOOL_MAP.find((m) => m.agent === agentRole);
+    const mapping = this._allMappings().find((m) => m.agent === agentRole);
     if (!mapping) {
       return null;
     }
@@ -693,7 +864,7 @@ export class GameStudiosBridge {
    * List the names of all known agent roles.
    */
   getAgentRoles(): string[] {
-    return AGENT_TOOL_MAP.map((m) => m.agent);
+    return this._allMappings().map((m) => m.agent);
   }
 
   /**
@@ -701,7 +872,7 @@ export class GameStudiosBridge {
    * the category prefixes in their mapping.
    */
   getAgentEngines(agentRole: string): EngineType[] {
-    const mapping = AGENT_TOOL_MAP.find((m) => m.agent === agentRole);
+    const mapping = this._allMappings().find((m) => m.agent === agentRole);
     if (!mapping) return [];
     const engines = new Set<EngineType>();
     for (const cat of mapping.categories) {
@@ -711,5 +882,63 @@ export class GameStudiosBridge {
       }
     }
     return [...engines];
+  }
+
+  // -------------------------------------------------------------------------
+  // Internal helpers
+  // -------------------------------------------------------------------------
+
+  /**
+   * Merge static + dynamic mappings.  Dynamic agents that share a name
+   * with a static agent are skipped (static takes precedence).
+   */
+  private _allMappings(): AgentToolMapping[] {
+    const staticNames = new Set(AGENT_TOOL_MAP.map((m) => m.agent));
+    const extras = this._dynamicMappings.filter(
+      (d) => !staticNames.has(d.agent),
+    );
+    return [...AGENT_TOOL_MAP, ...extras];
+  }
+
+  /**
+   * Replace the current dynamic mappings with a new set.
+   */
+  private _mergeDynamic(discovered: AgentToolMapping[]): void {
+    this._dynamicMappings = discovered;
+  }
+
+  /**
+   * Parse a single agent markdown file into an AgentToolMapping.
+   * Expected filename format: `agent-name.md`.
+   * The first markdown heading or first non-empty line is used as the
+   * description.  The full content is scanned for keyword matches.
+   */
+  _parseAgentFile(
+    filename: string,
+    content: string,
+  ): AgentToolMapping | null {
+    const agentName = filename.replace(/\.md$/i, "");
+    if (!agentName) return null;
+
+    // Extract description: first heading text, or first non-empty line
+    const lines = content.split("\n").map((l) => l.trim());
+    let description = "";
+    for (const line of lines) {
+      if (!line) continue;
+      const headingMatch = line.match(/^#+\s+(.*)/);
+      if (headingMatch) {
+        description = headingMatch[1];
+        break;
+      }
+      description = line;
+      break;
+    }
+    if (!description) {
+      description = agentName;
+    }
+
+    const categories = autoMapCategories(content);
+
+    return { agent: agentName, description, categories };
   }
 }
