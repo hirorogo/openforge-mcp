@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # インストール
 
 OpenForge MCP を使い始めるための準備をしましょう。手順はシンプルです。
@@ -23,11 +26,26 @@ Node.js は、このツールを動かすために必要なソフトです。普
 
 ### インストール手順
 
+<Tabs>
+  <TabItem value="windows" label="Windows">
+
 1. ブラウザで [https://nodejs.org](https://nodejs.org) を開きます
 2. トップページに大きなダウンロードボタンが2つあります。**左側の「LTS」と書いてある方**をクリックしてください（「推奨版」という意味です）
 3. ダウンロードされたファイルをダブルクリックして開きます
 4. インストーラーが起動するので、**「Next」を押し続けるだけ**で大丈夫です。設定はすべて初期値のままで問題ありません
 5. 最後に「Install」ボタンを押して、完了するまで待ちます
+
+  </TabItem>
+  <TabItem value="mac" label="Mac">
+
+1. ブラウザで [https://nodejs.org](https://nodejs.org) を開きます
+2. トップページに大きなダウンロードボタンが2つあります。**左側の「LTS」と書いてある方**をクリックしてください（「推奨版」という意味です）
+3. ダウンロードされた `.pkg` ファイルをダブルクリックして開きます
+4. インストーラーが起動するので、**「続ける」を押し続けるだけ**で大丈夫です。設定はすべて初期値のままで問題ありません
+5. 最後に「インストール」ボタンを押して、完了するまで待ちます
+
+  </TabItem>
+</Tabs>
 
 :::tip ヒント
 インストールが終わったら、パソコンを一度再起動しておくと確実です。
@@ -49,7 +67,8 @@ node --version
 
 「ターミナル」は、パソコンに文字で指示を出すための画面です。ちょっと取っつきにくく見えますが、ここではコマンドを1行コピー&ペーストするだけなので安心してください。
 
-### Windows の場合
+<Tabs>
+  <TabItem value="windows" label="Windows">
 
 1. キーボードの **Windows キー** を押します（画面左下のスタートボタンでもOK）
 2. そのまま **「terminal」** とキーボードで入力します
@@ -59,11 +78,15 @@ node --version
 Windows 11 をお使いなら「Windows Terminal」、Windows 10 なら「コマンド プロンプト」が見つかるはずです。どちらでも大丈夫です。
 :::
 
-### Mac の場合
+  </TabItem>
+  <TabItem value="mac" label="Mac">
 
 1. キーボードで **Command + スペース** を押します（Spotlight 検索が開きます）
 2. **「terminal」** と入力して Enter を押します
 3. 黒い画面（ターミナル）が開きます
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -115,15 +138,24 @@ Node.js がまだインストールされていないか、インストール後
 
 管理者権限が必要な場合があります。
 
-**Windows の場合:** スタートメニューで「terminal」を検索したとき、右クリックして「**管理者として実行**」を選んでください。
+<Tabs>
+  <TabItem value="windows" label="Windows">
 
-**Mac の場合:** コマンドの前に `sudo` を付けて実行してください:
+スタートメニューで「terminal」を検索したとき、右クリックして「**管理者として実行**」を選んでください。
+
+  </TabItem>
+  <TabItem value="mac" label="Mac">
+
+コマンドの前に `sudo` を付けて実行してください:
 
 ```bash
 sudo npx openforge-mcp setup
 ```
 
 パスワードの入力を求められたら、パソコンのログインパスワードを入力してください（入力中は画面に何も表示されませんが、ちゃんと入力されています）。
+
+  </TabItem>
+</Tabs>
 
 ### ダウンロードが途中で止まる
 

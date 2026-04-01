@@ -44,6 +44,7 @@ const sidebars: SidebarsConfig = {
     },
   ],
   referenceSidebar: [
+    'reference/tool-explorer',
     'reference/unity-tools',
     'reference/blender-tools',
     'reference/godot-tools',

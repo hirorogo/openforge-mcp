@@ -35,6 +35,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/hirorogo/openforge-mcp/tree/main/website/',
+          breadcrumbs: true,
         },
         blog: false,
         theme: {
@@ -44,10 +45,36 @@ const config: Config = {
     ],
   ],
 
+  themes: [
+    ['@easyops-cn/docusaurus-search-local', {
+      hashed: true,
+      language: ['ja', 'en'],
+      highlightSearchTermsOnTargetPage: true,
+      searchResultLimits: 8,
+    }],
+  ],
+
   themeConfig: {
+    announcementBar: {
+      id: 'v030_release',
+      content: 'v0.3.0 リリース -- 620以上のツール、全機能実装完了',
+      backgroundColor: '#1a56db',
+      textColor: '#ffffff',
+      isCloseable: true,
+    },
     colorMode: {
       defaultMode: 'light',
+      disableSwitch: false,
       respectPrefersColorScheme: true,
+    },
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 4,
     },
     navbar: {
       title: 'OpenForge MCP',
