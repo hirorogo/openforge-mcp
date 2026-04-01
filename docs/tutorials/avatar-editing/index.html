@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorials/avatar-editing" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">アバターを編集しよう | OpenForge MCP</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://hirorogo.github.io/openforge-mcp/docs/tutorials/avatar-editing"><meta data-rh="true" property="og:locale" content="ja"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="ja"><meta data-rh="true" name="docsearch:language" content="ja"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="アバターを編集しよう | OpenForge MCP"><meta data-rh="true" name="description" content="Blenderを使ってVRMアバターを読み込み、編集し、再エクスポートする方法"><meta data-rh="true" property="og:description" content="Blenderを使ってVRMアバターを読み込み、編集し、再エクスポートする方法"><link data-rh="true" rel="icon" href="/openforge-mcp/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://hirorogo.github.io/openforge-mcp/docs/tutorials/avatar-editing"><link data-rh="true" rel="alternate" href="https://hirorogo.github.io/openforge-mcp/docs/tutorials/avatar-editing" hreflang="ja"><link data-rh="true" rel="alternate" href="https://hirorogo.github.io/openforge-mcp/en/docs/tutorials/avatar-editing" hreflang="en"><link data-rh="true" rel="alternate" href="https://hirorogo.github.io/openforge-mcp/docs/tutorials/avatar-editing" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"アバターを編集しよう","item":"https://hirorogo.github.io/openforge-mcp/docs/tutorials/avatar-editing"}]}</script><link rel="stylesheet" href="/openforge-mcp/assets/css/styles.25dc4ebc.css">
+<script src="/openforge-mcp/assets/js/runtime~main.1259bdf4.js" defer="defer"></script>
+<script src="/openforge-mcp/assets/js/main.279a0d85.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="メインコンテンツまでスキップ"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">メインコンテンツまでスキップ</a></div><nav aria-label="ナビゲーション" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="ナビゲーションバーを開く" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/openforge-mcp/"><b class="navbar__title text--truncate">OpenForge MCP</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/openforge-mcp/docs/intro">ガイド</a><a class="navbar__item navbar__link" href="/openforge-mcp/docs/reference/unity-tools">ツール一覧</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>日本語</a><ul class="dropdown__menu"><li><a href="/openforge-mcp/docs/tutorials/avatar-editing" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="ja">日本語</a></li><li><a href="/openforge-mcp/en/docs/tutorials/avatar-editing" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en">English</a></li></ul></div><a href="https://github.com/hirorogo/openforge-mcp" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="システムモード" aria-label="ダークモードを切り替える(現在はシステムモード)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="先頭へ戻る" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="ドキュメントのサイドバー" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/openforge-mcp/docs/intro"><span title="はじめに" class="linkLabel_WmDU">はじめに</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/setup/install"><span title="インストール" class="categoryLinkLabel_W154">インストール</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/openforge-mcp/docs/tutorials/first-steps"><span title="チュートリアル" class="categoryLinkLabel_W154">チュートリアル</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/first-steps"><span title="はじめての操作" class="linkLabel_WmDU">はじめての操作</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/scene-building"><span title="シーンを作ってみよう" class="linkLabel_WmDU">シーンを作ってみよう</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/modeling"><span title="Blenderでモデリング" class="linkLabel_WmDU">Blenderでモデリング</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/cross-app"><span title="BlenderからUnityへ" class="linkLabel_WmDU">BlenderからUnityへ</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/save-restore"><span title="セーブとロード" class="linkLabel_WmDU">セーブとロード</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/vrchat"><span title="VRChatワールドを作ろう" class="linkLabel_WmDU">VRChatワールドを作ろう</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/physics-playground"><span title="物理演算で遊ぼう" class="linkLabel_WmDU">物理演算で遊ぼう</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/openforge-mcp/docs/tutorials/avatar-editing"><span title="アバターを編集しよう" class="linkLabel_WmDU">アバターを編集しよう</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/tutorials/ai-playtest"><span title="AIにテストプレイしてもらう" class="linkLabel_WmDU">AIにテストプレイしてもらう</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/advanced/architecture"><span title="仕組み" class="categoryLinkLabel_W154">仕組み</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="パンくずリストのナビゲーション"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="ホームページ" class="breadcrumbs__link" href="/openforge-mcp/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">チュートリアル</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">アバターを編集しよう</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">このページの見出し</button></div><div class="theme-doc-markdown markdown"><header><h1>アバターを編集しよう</h1></header>
+<p>このチュートリアルでは、BlenderでVRMアバターを読み込んで、ポリゴン数の削減、アクセサリーの追加、体型の調整、表情の作成を行い、再びVRM形式でエクスポートする。すべてAIへの自然言語の指示で進めるよ。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="前提条件">前提条件<a href="#前提条件" class="hash-link" aria-label="前提条件 への直接リンク" title="前提条件 への直接リンク" translate="no">​</a></h2>
+<ul>
+<li class="">Blender が起動していて、OpenForge MCP と接続済みであること</li>
+<li class="">VRMファイルが手元にあること（自作でも配布されたものでもOK）</li>
+<li class="">VRMアドオンがBlenderにインストール済みであること</li>
+</ul>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>VRMとは</div><div class="admonitionContent_BuS1"><p>VRM は、人型の3Dアバター向けのファイル形式。VRChat や cluster などのプラットフォームで広く使われている。Blender で編集するには VRM アドオンが必要だよ。</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ステップ1-vrmファイルを読み込む">ステップ1: VRMファイルを読み込む<a href="#ステップ1-vrmファイルを読み込む" class="hash-link" aria-label="ステップ1: VRMファイルを読み込む への直接リンク" title="ステップ1: VRMファイルを読み込む への直接リンク" translate="no">​</a></h2>
+<p>まず、アバターをBlenderに読み込もう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>Blenderに「C:/Users/me/avatars/my_avatar.vrm」を読み込んで</p>
+</blockquote>
+<p><strong>何が起きる:</strong> VRM ファイルがインポートされて、Blender のビューポートにアバターが表示される。ボーン（骨格）やメッシュ（外形）が読み込まれるよ。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>読み込んだアバターのポリゴン数を教えて</p>
+</blockquote>
+<p><strong>何が起きる:</strong> AIがメッシュの頂点数と面（ポリゴン）数を調べて報告してくれる。VRChat などのプラットフォームにはポリゴン数の上限があるので、ここで現状を確認しておこう。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ステップ2-ポリゴン数を削減する">ステップ2: ポリゴン数を削減する<a href="#ステップ2-ポリゴン数を削減する" class="hash-link" aria-label="ステップ2: ポリゴン数を削減する への直接リンク" title="ステップ2: ポリゴン数を削減する への直接リンク" translate="no">​</a></h2>
+<p>ポリゴン数が多すぎる場合は、Decimate モディファイアを使って削減しよう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>アバターのメッシュにDecimateモディファイアを追加して、ポリゴン数を70%に減らして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> Decimate モディファイアが適用されて、ポリゴン数が約70%に削減される。</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>削減しすぎに注意</div><div class="admonitionContent_BuS1"><p>ポリゴンを減らしすぎると、顔の形が崩れたり、指が溶けたりする。まずは80%くらいから始めて、見た目を確認しながら段階的に減らしていくのがおすすめだよ。</p></div></div>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>今のアバターのスクリーンショットを見せて。正面と横から</p>
+</blockquote>
+<p><strong>何が起きる:</strong> 正面と側面のレンダリング結果が返ってくる。見た目に大きな劣化がないか確認しよう。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="部分的に削減する">部分的に削減する<a href="#部分的に削減する" class="hash-link" aria-label="部分的に削減する への直接リンク" title="部分的に削減する への直接リンク" translate="no">​</a></h3>
+<p>顔はそのままにして、体や服だけ削減したい場合もあるよね。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>顔のメッシュ以外のパーツだけにDecimateモディファイアを適用して、60%まで減らして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> 顔以外のメッシュオブジェクトにだけモディファイアが適用される。顔の表情が崩れずに、全体のポリゴン数を減らせるよ。</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ステップ3-アクセサリーを追加するヘッドフォン">ステップ3: アクセサリーを追加する（ヘッドフォン）<a href="#ステップ3-アクセサリーを追加するヘッドフォン" class="hash-link" aria-label="ステップ3: アクセサリーを追加する（ヘッドフォン） への直接リンク" title="ステップ3: アクセサリーを追加する（ヘッドフォン） への直接リンク" translate="no">​</a></h2>
+<p>アバターにオリジナリティを出すために、ヘッドフォンを追加しよう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>アバターの頭にヘッドフォンを作って付けて。ヘッドバンドは黒で、イヤーパッドは丸くて厚みがある感じにして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> AIがトーラスやシリンダーなどの基本図形を組み合わせて、ヘッドフォンの形状を作成する。アバターの頭の位置に合わせて配置してくれるよ。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="位置を微調整する">位置を微調整する<a href="#位置を微調整する" class="hash-link" aria-label="位置を微調整する への直接リンク" title="位置を微調整する への直接リンク" translate="no">​</a></h3>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>ヘッドフォンをもう少し下にずらして、耳の位置に合わせて</p>
+</blockquote>
+<p><strong>何が起きる:</strong> ヘッドフォンのY座標が調整されて、耳にフィットする位置に移動する。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="ボーンに追従させる">ボーンに追従させる<a href="#ボーンに追従させる" class="hash-link" aria-label="ボーンに追従させる への直接リンク" title="ボーンに追従させる への直接リンク" translate="no">​</a></h3>
+<p>アクセサリーが頭の動きに追従するように設定しよう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>ヘッドフォンのオブジェクトをアバターのHeadボーンの子にして、頭の動きに追従するようにして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> ヘッドフォンがHead ボーンにペアレント設定されて、頭を動かすとヘッドフォンも一緒に動くようになる。</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>アクセサリーのアイデア</div><div class="admonitionContent_BuS1"><p>ヘッドフォン以外にも、帽子、メガネ、リボン、ネックレスなど、さまざまなアクセサリーを同じ方法で追加できるよ。基本図形の組み合わせで意外といろんな形が作れる。</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ステップ4-体型を調整する">ステップ4: 体型を調整する<a href="#ステップ4-体型を調整する" class="hash-link" aria-label="ステップ4: 体型を調整する への直接リンク" title="ステップ4: 体型を調整する への直接リンク" translate="no">​</a></h2>
+<p>アバターの体型プロポーションを変更してみよう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>アバターの腕を少し長くして。現在の1.1倍くらいに</p>
+</blockquote>
+<p><strong>何が起きる:</strong> 腕のボーンのスケールが調整されて、腕が少し長くなる。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>頭身を変えて、もう少し頭を大きくしたい。頭のスケールを1.15倍にして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> Head ボーンのスケールが拡大されて、やや頭が大きめの可愛らしい印象になる。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>全体の身長を10%縮めて、デフォルメ感を出して</p>
+</blockquote>
+<p><strong>何が起きる:</strong> アーマチュア全体のスケールが調整されて、全体的にコンパクトな体型になる。</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>ボーンの変更は慎重に</div><div class="admonitionContent_BuS1"><p>ボーンのスケールを大きく変えると、メッシュの変形が不自然になることがある。変更後は必ずスクリーンショットで確認して、おかしな部分がないかチェックしよう。</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ステップ5-表情を作るシェイプキー">ステップ5: 表情を作る（シェイプキー）<a href="#ステップ5-表情を作るシェイプキー" class="hash-link" aria-label="ステップ5: 表情を作る（シェイプキー） への直接リンク" title="ステップ5: 表情を作る（シェイプキー） への直接リンク" translate="no">​</a></h2>
+<p>VRMアバターの表情はシェイプキー（ブレンドシェイプ）で制御される。新しい表情を追加してみよう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>アバターの顔メッシュのシェイプキー一覧を教えて</p>
+</blockquote>
+<p><strong>何が起きる:</strong> 現在登録されているシェイプキーの名前と数が一覧で返ってくる。「Blink」「Joy」「Angry」などがあるはず。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="新しい表情を追加する">新しい表情を追加する<a href="#新しい表情を追加する" class="hash-link" aria-label="新しい表情を追加する への直接リンク" title="新しい表情を追加する への直接リンク" translate="no">​</a></h3>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>新しいシェイプキーを作って。名前は「Surprised」にして。目を大きく開いて、口を小さく丸く開けた驚いた表情にして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> Basis（基本形）をコピーした新しいシェイプキーが作成される。AIが目と口の頂点を編集して、驚いた表情を作ってくれる。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>Surprisedシェイプキーのプレビューを見せて。値を0から1まで段階的に変化させたスクリーンショットを撮って</p>
+</blockquote>
+<p><strong>何が起きる:</strong> シェイプキーの値を変えながら、表情が変化していく様子のスクリーンショットが返ってくる。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="もう1つ表情を追加する">もう1つ表情を追加する<a href="#もう1つ表情を追加する" class="hash-link" aria-label="もう1つ表情を追加する への直接リンク" title="もう1つ表情を追加する への直接リンク" translate="no">​</a></h3>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>「Smug」というシェイプキーも作って。片目を少し細めて、口の片側だけ上がったニヤリとした表情にして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> 左右非対称の表情が作成される。キャラクターに個性が出るね。</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>表情作成のコツ</div><div class="admonitionContent_BuS1"><p>表情は「やりすぎ」くらいがちょうどいいことが多い。シェイプキーの値は0から1の間で調整できるので、モデリング時は値1.0で最大限の変化を付けておくと、実際の使用時に細かく調整しやすいよ。</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ステップ6-vrm形式でエクスポートする">ステップ6: VRM形式でエクスポートする<a href="#ステップ6-vrm形式でエクスポートする" class="hash-link" aria-label="ステップ6: VRM形式でエクスポートする への直接リンク" title="ステップ6: VRM形式でエクスポートする への直接リンク" translate="no">​</a></h2>
+<p>編集が終わったら、VRM形式で書き出そう。</p>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>今のアバターをVRM形式でエクスポートして。保存先は「C:/Users/me/avatars/my_avatar_edited.vrm」にして</p>
+</blockquote>
+<p><strong>何が起きる:</strong> VRM エクスポート処理が実行される。ボーン構造、シェイプキー、マテリアル、テクスチャがすべてVRM形式にまとめられて出力される。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="エクスポート前の最終チェック">エクスポート前の最終チェック<a href="#エクスポート前の最終チェック" class="hash-link" aria-label="エクスポート前の最終チェック への直接リンク" title="エクスポート前の最終チェック への直接リンク" translate="no">​</a></h3>
+<p><strong>あなた:</strong></p>
+<blockquote>
+<p>エクスポート前に問題がないかチェックして。ポリゴン数、ボーン数、マテリアル数を教えて</p>
+</blockquote>
+<p><strong>何が起きる:</strong> アバターの各種数値が報告される。プラットフォームの制限に収まっているか確認しよう。</p>
+<table><thead><tr><th>チェック項目</th><th>VRChatの目安（Medium）</th></tr></thead><tbody><tr><td>ポリゴン数</td><td>32,000以下</td></tr><tr><td>ボーン数</td><td>256以下</td></tr><tr><td>マテリアル数</td><td>8以下</td></tr><tr><td>メッシュ数</td><td>16以下</td></tr></tbody></table>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>元ファイルは上書きしない</div><div class="admonitionContent_BuS1"><p>エクスポート時は、元のVRMファイルとは別の名前で保存するのがおすすめ。万が一の場合でも、元ファイルからやり直せるよ。</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="まとめ">まとめ<a href="#まとめ" class="hash-link" aria-label="まとめ への直接リンク" title="まとめ への直接リンク" translate="no">​</a></h2>
+<p>このチュートリアルで学んだこと:</p>
+<ul>
+<li class="">VRMファイルのBlenderへの読み込み</li>
+<li class="">Decimateモディファイアによるポリゴン数の削減</li>
+<li class="">基本図形を使ったアクセサリー（ヘッドフォン）の作成と取り付け</li>
+<li class="">ボーンのスケール調整による体型の変更</li>
+<li class="">シェイプキーによる表情の追加</li>
+<li class="">VRM形式での再エクスポート</li>
+</ul>
+<p>すべての操作を自然言語で指示できるので、Blenderの複雑なUIを覚えなくても、アバターのカスタマイズが手軽にできる。自分だけのオリジナルアバターを作ってみよう。</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/hirorogo/openforge-mcp/tree/main/website/docs/tutorials/avatar-editing.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>このページを編集</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="ドキュメントページ"><a class="pagination-nav__link pagination-nav__link--prev" href="/openforge-mcp/docs/tutorials/physics-playground"><div class="pagination-nav__sublabel">前へ</div><div class="pagination-nav__label">物理演算で遊ぼう</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/openforge-mcp/docs/tutorials/ai-playtest"><div class="pagination-nav__sublabel">次へ</div><div class="pagination-nav__label">AIにテストプレイしてもらう</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#前提条件" class="table-of-contents__link toc-highlight">前提条件</a></li><li><a href="#ステップ1-vrmファイルを読み込む" class="table-of-contents__link toc-highlight">ステップ1: VRMファイルを読み込む</a></li><li><a href="#ステップ2-ポリゴン数を削減する" class="table-of-contents__link toc-highlight">ステップ2: ポリゴン数を削減する</a><ul><li><a href="#部分的に削減する" class="table-of-contents__link toc-highlight">部分的に削減する</a></li></ul></li><li><a href="#ステップ3-アクセサリーを追加するヘッドフォン" class="table-of-contents__link toc-highlight">ステップ3: アクセサリーを追加する（ヘッドフォン）</a><ul><li><a href="#位置を微調整する" class="table-of-contents__link toc-highlight">位置を微調整する</a></li><li><a href="#ボーンに追従させる" class="table-of-contents__link toc-highlight">ボーンに追従させる</a></li></ul></li><li><a href="#ステップ4-体型を調整する" class="table-of-contents__link toc-highlight">ステップ4: 体型を調整する</a></li><li><a href="#ステップ5-表情を作るシェイプキー" class="table-of-contents__link toc-highlight">ステップ5: 表情を作る（シェイプキー）</a><ul><li><a href="#新しい表情を追加する" class="table-of-contents__link toc-highlight">新しい表情を追加する</a></li><li><a href="#もう1つ表情を追加する" class="table-of-contents__link toc-highlight">もう1つ表情を追加する</a></li></ul></li><li><a href="#ステップ6-vrm形式でエクスポートする" class="table-of-contents__link toc-highlight">ステップ6: VRM形式でエクスポートする</a><ul><li><a href="#エクスポート前の最終チェック" class="table-of-contents__link toc-highlight">エクスポート前の最終チェック</a></li></ul></li><li><a href="#まとめ" class="table-of-contents__link toc-highlight">まとめ</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">ガイド</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/openforge-mcp/docs/intro">はじめに</a></li><li class="footer__item"><a class="footer__link-item" href="/openforge-mcp/docs/setup/install">インストール</a></li><li class="footer__item"><a class="footer__link-item" href="/openforge-mcp/docs/tutorials/vrchat">VRChat向け</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">リンク</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/hirorogo/openforge-mcp" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">OpenForge MCP -- MIT License</div></div></div></footer></div>
+</body>
+</html>
