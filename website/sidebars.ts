@@ -42,6 +42,17 @@ const sidebars: SidebarsConfig = {
     'reference/blender-tools',
     'reference/godot-tools',
     'reference/system-tools',
+    {
+      type: 'category',
+      label: '開発に参加する',
+      items: [
+        'contributing/overview',
+        'contributing/add-unity-tool',
+        'contributing/add-blender-tool',
+        'contributing/add-godot-tool',
+        'contributing/project-structure',
+      ],
+    },
   ],
 };
 
