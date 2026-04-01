@@ -1,0 +1,23 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test-typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: cd packages/mcp-server && npm ci
+      - run: cd packages/mcp-server && npx tsc --noEmit
+      - run: cd packages/mcp-server && npx vitest run
+
+  test-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pytest
+      - run: cd packages/blender-addon/tests && python -m pytest -v

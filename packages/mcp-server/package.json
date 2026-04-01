@@ -8,6 +8,29 @@
   "bin": {
     "openforge-mcp": "dist/cli/index.js"
   },
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "mcp",
+    "unity",
+    "blender",
+    "godot",
+    "ai",
+    "game-development"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openforge/openforge-mcp.git",
+    "directory": "packages/mcp-server"
+  },
+  "homepage": "https://github.com/openforge/openforge-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/openforge/openforge-mcp/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",

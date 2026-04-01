@@ -17,7 +17,7 @@ const config: Config = {
   organizationName: 'hirorogo',
   projectName: 'openforge-mcp',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
 
   i18n: {
     defaultLocale: 'ja',

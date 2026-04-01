@@ -63,6 +63,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'VRChat',
       items: [
+        'vrchat/getting-started-vrchat',
         'vrchat/overview',
         'vrchat/world-creation',
         'vrchat/avatar-setup',
