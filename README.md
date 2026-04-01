@@ -1,3 +1,5 @@
+[日本語版はこちら / Japanese version](README.ja.md)
+
 # OpenForge MCP
 
 Free, open-source MCP server that connects AI to Unity and Blender.
@@ -16,6 +18,17 @@ OpenForge MCP is a [Model Context Protocol](https://modelcontextprotocol.io/) se
 - Token-efficient 3-meta-tool architecture (99% context reduction)
 - One-command setup
 - MIT licensed, free forever
+
+## Demo
+
+<!-- Replace these with actual screenshots -->
+| Unity | Blender |
+|-------|---------|
+| ![Unity demo](docs/images/unity-demo.png) | ![Blender demo](docs/images/blender-demo.png) |
+
+| Setup Window | AI Client |
+|-------------|-----------|
+| ![Setup](docs/images/setup-window.png) | ![Claude Desktop](docs/images/claude-desktop.png) |
 
 ## Quick Start
 
