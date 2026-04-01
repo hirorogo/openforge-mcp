@@ -40,6 +40,8 @@ const sidebars: SidebarsConfig = {
         'advanced/local-llm',
         'advanced/multi-agent',
         'advanced/pipeline-detail',
+        'advanced/game-studios',
+        'advanced/philosophy',
       ],
     },
   ],
