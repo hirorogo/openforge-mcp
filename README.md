@@ -105,6 +105,8 @@ This means the AI only loads tool details when it needs them, instead of floodin
 
 More tools are being added. See the [Roadmap](#roadmap) below.
 
+**VRChat creators:** See the [VRChat Guide](docs/vrchat-guide.md) for world building and avatar editing workflows.
+
 ## Tool Modes
 
 Choose the mode that fits your setup:
