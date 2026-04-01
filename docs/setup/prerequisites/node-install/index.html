@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-setup/prerequisites/node-install" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Node.js のインストール | OpenForge MCP</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://hirorogo.github.io/openforge-mcp/docs/setup/prerequisites/node-install"><meta data-rh="true" property="og:locale" content="ja"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="ja"><meta data-rh="true" name="docsearch:language" content="ja"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Node.js のインストール | OpenForge MCP"><meta data-rh="true" name="description" content="Node.js とは何か"><meta data-rh="true" property="og:description" content="Node.js とは何か"><link data-rh="true" rel="icon" href="/openforge-mcp/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://hirorogo.github.io/openforge-mcp/docs/setup/prerequisites/node-install"><link data-rh="true" rel="alternate" href="https://hirorogo.github.io/openforge-mcp/docs/setup/prerequisites/node-install" hreflang="ja"><link data-rh="true" rel="alternate" href="https://hirorogo.github.io/openforge-mcp/en/docs/setup/prerequisites/node-install" hreflang="en"><link data-rh="true" rel="alternate" href="https://hirorogo.github.io/openforge-mcp/docs/setup/prerequisites/node-install" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Node.js のインストール","item":"https://hirorogo.github.io/openforge-mcp/docs/setup/prerequisites/node-install"}]}</script><link rel="stylesheet" href="/openforge-mcp/assets/css/styles.e23417b7.css">
+<script src="/openforge-mcp/assets/js/runtime~main.909707b0.js" defer="defer"></script>
+<script src="/openforge-mcp/assets/js/main.de049098.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())</script><div id="__docusaurus"><div role="region" aria-label="メインコンテンツまでスキップ"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">メインコンテンツまでスキップ</a></div><div class="theme-announcement-bar announcementBar_mb4j" style="background-color:#1a56db;color:#ffffff" role="banner"><div class="announcementBarPlaceholder_vyr4"></div><div class="content_knG7 announcementBarContent_xLdY">v0.3.0 リリース -- 620以上のツール、全機能実装完了</div><button type="button" aria-label="閉じる" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div><nav aria-label="ナビゲーション" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="ナビゲーションバーを開く" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/openforge-mcp/"><b class="navbar__title text--truncate">OpenForge MCP</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/openforge-mcp/docs/intro">ガイド</a><a class="navbar__item navbar__link" href="/openforge-mcp/docs/reference/tool-explorer">ツール一覧</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>日本語</a><ul class="dropdown__menu"><li><a href="/openforge-mcp/docs/setup/prerequisites/node-install" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="ja">日本語</a></li><li><a href="/openforge-mcp/en/docs/setup/prerequisites/node-install" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en">English</a></li></ul></div><a href="https://github.com/hirorogo/openforge-mcp" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="システムモード" aria-label="ダークモードを切り替える(現在はシステムモード)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="検索" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="先頭へ戻る" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="ドキュメントのサイドバー" class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/openforge-mcp/docs/intro"><span title="はじめに" class="linkLabel_WmDU">はじめに</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/openforge-mcp/docs/sitemap"><span title="全ページ一覧" class="linkLabel_WmDU">全ページ一覧</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/openforge-mcp/docs/setup/prerequisites/node-install"><span title="準備 (はじめての方)" class="categoryLinkLabel_W154">準備 (はじめての方)</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/openforge-mcp/docs/setup/prerequisites/node-install"><span title="Node.js のインストール" class="linkLabel_WmDU">Node.js のインストール</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/setup/prerequisites/unity-install"><span title="Unity のインストール" class="linkLabel_WmDU">Unity のインストール</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/setup/prerequisites/blender-install"><span title="Blender のインストール" class="linkLabel_WmDU">Blender のインストール</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/setup/prerequisites/godot-install"><span title="Godot のインストール" class="linkLabel_WmDU">Godot のインストール</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/openforge-mcp/docs/setup/prerequisites/terminal-basics"><span title="ターミナル（コマンドプロンプト）の使い方" class="linkLabel_WmDU">ターミナル（コマンドプロンプト）の使い方</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/setup/install"><span title="インストール" class="categoryLinkLabel_W154">インストール</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/tutorials/first-steps"><span title="チュートリアル" class="categoryLinkLabel_W154">チュートリアル</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/vrchat/overview"><span title="VRChat" class="categoryLinkLabel_W154">VRChat</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/tutorials/advanced/custom-pipeline"><span title="上級チュートリアル" class="categoryLinkLabel_W154">上級チュートリアル</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/usage/basic-commands"><span title="使い方" class="categoryLinkLabel_W154">使い方</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/guides/student-free"><span title="ガイド" class="categoryLinkLabel_W154">ガイド</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/openforge-mcp/docs/advanced/architecture"><span title="仕組み" class="categoryLinkLabel_W154">仕組み</span></a></div></li></ul></nav><button type="button" title="サイドバーを隠す" aria-label="サイドバーを隠す" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="パンくずリストのナビゲーション"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="ホームページ" class="breadcrumbs__link" href="/openforge-mcp/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">準備 (はじめての方)</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Node.js のインストール</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">このページの見出し</button></div><div class="theme-doc-markdown markdown"><header><h1>Node.js のインストール</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="nodejs-とは何か">Node.js とは何か<a href="#nodejs-とは何か" class="hash-link" aria-label="Node.js とは何か への直接リンク" title="Node.js とは何か への直接リンク" translate="no">​</a></h2>
+<p>Node.js は、パソコンの上でさまざまなアプリやツールを動かすための「土台」のようなソフトウェアです。</p>
+<p>たとえば、ゲームで遊ぶためにゲーム機が必要なように、OpenForge の MCP サーバーを動かすためには Node.js が必要です。Node.js そのものは画面に何も表示しませんが、裏側でいろいろなプログラムを動かす役割をしています。</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>なぜ Node.js が必要なの？</div><div class="admonitionContent_BuS1"><p>OpenForge の MCP サーバーは Node.js の上で動きます。Node.js がインストールされていないと、サーバーを起動できません。最初に一度だけインストールすれば、あとは意識する必要はありません。</p></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="windows-でのインストール">Windows でのインストール<a href="#windows-でのインストール" class="hash-link" aria-label="Windows でのインストール への直接リンク" title="Windows でのインストール への直接リンク" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="手順-1-ダウンロードページを開く">手順 1: ダウンロードページを開く<a href="#手順-1-ダウンロードページを開く" class="hash-link" aria-label="手順 1: ダウンロードページを開く への直接リンク" title="手順 1: ダウンロードページを開く への直接リンク" translate="no">​</a></h3>
+<ol>
+<li class="">ブラウザ（Chrome、Edge など）を開きます。</li>
+<li class="">アドレスバー（画面の上のほうにある、URL が表示されている細長い欄）に <code>https://nodejs.org/ja</code> と入力して、Enter キーを押します。</li>
+<li class="">Node.js の公式サイトが表示されます。</li>
+</ol>
+<p>[Screenshot: Node.js 公式サイトのトップページ。緑色のダウンロードボタンが 2 つ表示されている]</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="手順-2-lts-版をダウンロードする">手順 2: LTS 版をダウンロードする<a href="#手順-2-lts-版をダウンロードする" class="hash-link" aria-label="手順 2: LTS 版をダウンロードする への直接リンク" title="手順 2: LTS 版をダウンロードする への直接リンク" translate="no">​</a></h3>
+<ol>
+<li class="">画面に大きな緑色のボタンが 2 つ表示されています。</li>
+<li class="">左側の「LTS」と書かれたボタンをクリックしてください。<!-- -->
+<ul>
+<li class="">LTS は「Long Term Support（長期サポート）」の略で、安定して使えるバージョンという意味です。</li>
+<li class="">右側の「最新版」は新しい機能が入っていますが、不具合が起きやすいため、LTS を選んでください。</li>
+</ul>
+</li>
+<li class="">クリックすると、インストーラー（<code>.msi</code> というファイル）のダウンロードが始まります。</li>
+</ol>
+<p>[Screenshot: ブラウザの下部にダウンロード中のファイルが表示されている]</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>ダウンロード先がわからないとき</div><div class="admonitionContent_BuS1"><p>ダウンロードしたファイルは通常「ダウンロード」フォルダに保存されます。キーボードの <code>Windows キー + E</code> を押してエクスプローラーを開き、左側の「ダウンロード」をクリックすると見つかります。</p></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="手順-3-インストーラーを実行する">手順 3: インストーラーを実行する<a href="#手順-3-インストーラーを実行する" class="hash-link" aria-label="手順 3: インストーラーを実行する への直接リンク" title="手順 3: インストーラーを実行する への直接リンク" translate="no">​</a></h3>
+<ol>
+<li class="">ダウンロードした <code>.msi</code> ファイルをダブルクリックして開きます。</li>
+<li class="">「このアプリがデバイスに変更を加えることを許可しますか？」という画面が出たら「はい」をクリックします。</li>
+</ol>
+<p>[Screenshot: Windows のユーザーアカウント制御ダイアログ]</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="手順-4-インストールウィザードを進める">手順 4: インストールウィザードを進める<a href="#手順-4-インストールウィザードを進める" class="hash-link" aria-label="手順 4: インストールウィザードを進める への直接リンク" title="手順 4: インストールウィザードを進める への直接リンク" translate="no">​</a></h3>
+<p>インストーラーが起動すると、いくつかの画面が順番に表示されます。基本的にはそのまま「Next」を押していけば大丈夫です。</p>
+<p><strong>画面 1: Welcome（ようこそ）</strong></p>
+<ol>
+<li class="">「Welcome to the Node.js Setup Wizard」と表示されます。</li>
+<li class="">「Next」ボタンをクリックします。</li>
+</ol>
+<p>[Screenshot: Node.js インストーラーの Welcome 画面]</p>
+<p><strong>画面 2: License Agreement（ライセンス契約）</strong></p>
+<ol>
+<li class="">ライセンスの内容が表示されます。</li>
+<li class="">「I accept the terms in the License Agreement」（ライセンスに同意する）のチェックボックスにチェックを入れます。</li>
+<li class="">「Next」ボタンをクリックします。</li>
+</ol>
+<p>[Screenshot: ライセンス同意画面。チェックボックスの位置を矢印で示している]</p>
+<p><strong>画面 3: Destination Folder（インストール先）</strong></p>
+<ol>
+<li class="">インストール先のフォルダが表示されます。</li>
+<li class="">変更する必要はありません。そのまま「Next」をクリックします。</li>
+</ol>
+<p>[Screenshot: インストール先フォルダの選択画面]</p>
+<p><strong>画面 4: Custom Setup（カスタムセットアップ）</strong></p>
+<ol>
+<li class="">インストールする機能の一覧が表示されます。</li>
+<li class="">何も変更せず、そのまま「Next」をクリックします。</li>
+</ol>
+<p>[Screenshot: カスタムセットアップ画面]</p>
+<p><strong>画面 5: Tools for Native Modules（ネイティブモジュール用ツール）</strong></p>
+<ol>
+<li class="">「Automatically install the necessary tools...」というチェックボックスが表示される場合があります。</li>
+<li class="">このチェックは入れなくても構いません。OpenForge を使う分には不要です。</li>
+<li class="">「Next」をクリックします。</li>
+</ol>
+<p>[Screenshot: ネイティブモジュールツールの画面]</p>
+<p><strong>画面 6: Ready to install（インストール準備完了）</strong></p>
+<ol>
+<li class="">「Install」ボタンをクリックします。</li>
+<li class="">インストールが始まります。数分かかることがあります。</li>
+</ol>
+<p>[Screenshot: Install ボタンが表示された画面]</p>
+<p><strong>画面 7: Completed（完了）</strong></p>
+<ol>
+<li class="">「Finish」ボタンをクリックして、インストーラーを閉じます。</li>
+</ol>
+<p>[Screenshot: インストール完了画面]</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="手順-5-インストールを確認する">手順 5: インストールを確認する<a href="#手順-5-インストールを確認する" class="hash-link" aria-label="手順 5: インストールを確認する への直接リンク" title="手順 5: インストールを確認する への直接リンク" translate="no">​</a></h3>
+<p>インストールが正しく完了したかを確認します。</p>
+<ol>
+<li class="">キーボードの <code>Windows キー</code> を押します（画面の左下にある Windows のマーク）。</li>
+<li class="">「cmd」と入力します。</li>
+<li class="">「コマンド プロンプト」というアプリが表示されるので、クリックして開きます。</li>
+</ol>
+<p>[Screenshot: スタートメニューで cmd と検索した結果]</p>
+<ol start="4">
+<li class="">黒い画面が開きます。ここに以下の文字を入力して、Enter キーを押します。</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token function" style="color:#d73a49">node</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-v</span><br></span></code></pre></div></div>
+<ol start="5">
+<li class=""><code>v20.xx.x</code> のようなバージョン番号が表示されれば成功です（数字はインストールした時期によって異なります）。</li>
+</ol>
+<p>[Screenshot: コマンドプロンプトで node -v を実行し、バージョン番号が表示されている]</p>
+<ol start="6">
+<li class="">続けて、以下も入力して Enter を押します。</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token function" style="color:#d73a49">npm</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-v</span><br></span></code></pre></div></div>
+<ol start="7">
+<li class=""><code>10.x.x</code> のようなバージョン番号が表示されれば、npm（Node.js に付属するパッケージ管理ツール）も正しくインストールされています。</li>
+</ol>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>バージョン番号が表示されない場合</div><div class="admonitionContent_BuS1"><p>「&#x27;node&#x27; は、内部コマンドまたは外部コマンド、操作可能なプログラムまたはバッチ ファイルとして認識されていません。」というエラーが出た場合は、この後の「よくあるエラーと対処法」を読んでください。</p></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="mac-でのインストール">Mac でのインストール<a href="#mac-でのインストール" class="hash-link" aria-label="Mac でのインストール への直接リンク" title="Mac でのインストール への直接リンク" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="方法-a-公式サイトからダウンロードする方法">方法 A: 公式サイトからダウンロードする方法<a href="#方法-a-公式サイトからダウンロードする方法" class="hash-link" aria-label="方法 A: 公式サイトからダウンロードする方法 への直接リンク" title="方法 A: 公式サイトからダウンロードする方法 への直接リンク" translate="no">​</a></h3>
+<ol>
+<li class="">ブラウザで <code>https://nodejs.org/ja</code> を開きます。</li>
+<li class="">「LTS」と書かれた緑色のボタンをクリックします。</li>
+<li class=""><code>.pkg</code> ファイルがダウンロードされます。</li>
+<li class="">ダウンロードしたファイルをダブルクリックして開きます。</li>
+<li class="">画面の指示に従って「続ける」を何度かクリックし、最後に「インストール」をクリックします。</li>
+<li class="">Mac のパスワードを求められたら入力します。</li>
+<li class="">インストールが完了したら「閉じる」をクリックします。</li>
+</ol>
+<p>[Screenshot: Mac の Node.js インストーラー画面]</p>
+<p><strong>確認方法:</strong></p>
+<ol>
+<li class="">Finder を開きます。</li>
+<li class="">「アプリケーション」 &gt; 「ユーティリティ」 &gt; 「ターミナル」をダブルクリックして開きます。</li>
+<li class="">以下を入力して Enter を押します。</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token function" style="color:#d73a49">node</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-v</span><br></span></code></pre></div></div>
+<ol start="4">
+<li class="">バージョン番号が表示されれば成功です。</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="方法-b-homebrew-を使う方法">方法 B: Homebrew を使う方法<a href="#方法-b-homebrew-を使う方法" class="hash-link" aria-label="方法 B: Homebrew を使う方法 への直接リンク" title="方法 B: Homebrew を使う方法 への直接リンク" translate="no">​</a></h3>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Homebrew とは</div><div class="admonitionContent_BuS1"><p>Homebrew は Mac 用のパッケージ管理ツールです。ターミナルにコマンドを入力するだけでソフトウェアをインストールできます。既に Homebrew を使っている方はこちらの方法が簡単です。Homebrew をまだインストールしていない場合は、方法 A を使ってください。</p></div></div>
+<ol>
+<li class="">ターミナルを開きます。</li>
+<li class="">以下のコマンドを入力して Enter を押します。</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">brew </span><span class="token function" style="color:#d73a49">install</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">node</span><br></span></code></pre></div></div>
+<ol start="3">
+<li class="">インストールが完了したら、以下で確認します。</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token function" style="color:#d73a49">node</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-v</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="よくあるエラーと対処法">よくあるエラーと対処法<a href="#よくあるエラーと対処法" class="hash-link" aria-label="よくあるエラーと対処法 への直接リンク" title="よくあるエラーと対処法 への直接リンク" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="エラー-1-node-is-not-recognizedまたはnode-command-not-found">エラー 1: 「node is not recognized」または「node: command not found」<a href="#エラー-1-node-is-not-recognizedまたはnode-command-not-found" class="hash-link" aria-label="エラー 1: 「node is not recognized」または「node: command not found」 への直接リンク" title="エラー 1: 「node is not recognized」または「node: command not found」 への直接リンク" translate="no">​</a></h3>
+<p>このエラーは、パソコンが Node.js のインストール場所を見つけられないときに発生します。これは「PATH」という設定の問題です。</p>
+<p><strong>Windows での対処法:</strong></p>
+<ol>
+<li class="">パソコンを再起動してみてください。再起動するだけで直ることが多いです。</li>
+<li class="">再起動しても直らない場合は、以下の手順で PATH を手動で設定します。</li>
+</ol>
+<p><strong>PATH を手動で設定する手順（Windows）:</strong></p>
+<ol>
+<li class="">キーボードの <code>Windows キー</code> を押して「環境変数」と入力します。</li>
+<li class="">「システム環境変数の編集」をクリックします。</li>
+</ol>
+<p>[Screenshot: スタートメニューで「環境変数」を検索した結果]</p>
+<ol start="3">
+<li class="">「環境変数」ボタンをクリックします。</li>
+</ol>
+<p>[Screenshot: システムのプロパティ画面。「環境変数」ボタンの位置を示している]</p>
+<ol start="4">
+<li class="">上半分の「ユーザー環境変数」の中から「Path」を探して選択し、「編集」をクリックします。</li>
+</ol>
+<p>[Screenshot: 環境変数の一覧画面。Path が選択されている]</p>
+<ol start="5">
+<li class="">「新規」ボタンをクリックします。</li>
+<li class="">以下のパスを入力します。</li>
+</ol>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">C:\Program Files\nodejs\</span><br></span></code></pre></div></div>
+<ol start="7">
+<li class="">「OK」をクリックしてすべてのウィンドウを閉じます。</li>
+<li class="">コマンドプロンプトを一度閉じて、もう一度開いてから <code>node -v</code> を試してください。</li>
+</ol>
+<p>[Screenshot: Path の編集画面に Node.js のパスが追加されている]</p>
+<p><strong>Mac での対処法:</strong></p>
+<ol>
+<li class="">ターミナルを閉じて、もう一度開いてみてください。</li>
+<li class="">それでも直らない場合は、以下のコマンドを入力します。</li>
+</ol>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable environment constant" style="color:#36acaa">PATH</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">&quot;/usr/local/bin:</span><span class="token string environment constant" style="color:#36acaa">$PATH</span><span class="token string" style="color:#e3116c">&quot;</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="エラー-2-インストーラーが起動しない">エラー 2: インストーラーが起動しない<a href="#エラー-2-インストーラーが起動しない" class="hash-link" aria-label="エラー 2: インストーラーが起動しない への直接リンク" title="エラー 2: インストーラーが起動しない への直接リンク" translate="no">​</a></h3>
+<ul>
+<li class="">ダウンロードしたファイルが壊れている可能性があります。ファイルを削除して、もう一度ダウンロードしてください。</li>
+<li class="">ウイルス対策ソフトがブロックしている場合があります。一時的にウイルス対策ソフトを無効にしてからインストールを試してみてください。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="エラー-3-permission-deniedと表示されるmac">エラー 3: 「permission denied」と表示される（Mac）<a href="#エラー-3-permission-deniedと表示されるmac" class="hash-link" aria-label="エラー 3: 「permission denied」と表示される（Mac） への直接リンク" title="エラー 3: 「permission denied」と表示される（Mac） への直接リンク" translate="no">​</a></h3>
+<p>Mac で <code>npm install</code> などを実行したときにこのエラーが出ることがあります。</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token function" style="color:#d73a49">sudo</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">npm</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">install</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-g</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&lt;</span><span class="token plain">パッケージ名</span><span class="token operator" style="color:#393A34">&gt;</span><br></span></code></pre></div></div>
+<p>のように、コマンドの先頭に <code>sudo</code> をつけてから実行してください。Mac のパスワードを求められたら入力します（入力中、文字は画面に表示されませんが、正常です）。</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="まとめ">まとめ<a href="#まとめ" class="hash-link" aria-label="まとめ への直接リンク" title="まとめ への直接リンク" translate="no">​</a></h2>
+<p>ここまでの作業で以下が完了しました。</p>
+<ul>
+<li class="">Node.js のインストール</li>
+<li class="">npm（Node.js のパッケージ管理ツール）のインストール</li>
+<li class="">コマンドプロンプト（またはターミナル）での動作確認</li>
+</ul>
+<p>これで OpenForge の MCP サーバーを動かす準備が整いました。次のステップに進みましょう。</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/hirorogo/openforge-mcp/tree/main/website/docs/setup/prerequisites/node-install.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>このページを編集</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="ドキュメントページ"><a class="pagination-nav__link pagination-nav__link--prev" href="/openforge-mcp/docs/sitemap"><div class="pagination-nav__sublabel">前へ</div><div class="pagination-nav__label">全ページ一覧</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/openforge-mcp/docs/setup/prerequisites/unity-install"><div class="pagination-nav__sublabel">次へ</div><div class="pagination-nav__label">Unity のインストール</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#nodejs-とは何か" class="table-of-contents__link toc-highlight">Node.js とは何か</a></li><li><a href="#windows-でのインストール" class="table-of-contents__link toc-highlight">Windows でのインストール</a><ul><li><a href="#手順-1-ダウンロードページを開く" class="table-of-contents__link toc-highlight">手順 1: ダウンロードページを開く</a></li><li><a href="#手順-2-lts-版をダウンロードする" class="table-of-contents__link toc-highlight">手順 2: LTS 版をダウンロードする</a></li><li><a href="#手順-3-インストーラーを実行する" class="table-of-contents__link toc-highlight">手順 3: インストーラーを実行する</a></li><li><a href="#手順-4-インストールウィザードを進める" class="table-of-contents__link toc-highlight">手順 4: インストールウィザードを進める</a></li><li><a href="#手順-5-インストールを確認する" class="table-of-contents__link toc-highlight">手順 5: インストールを確認する</a></li></ul></li><li><a href="#mac-でのインストール" class="table-of-contents__link toc-highlight">Mac でのインストール</a><ul><li><a href="#方法-a-公式サイトからダウンロードする方法" class="table-of-contents__link toc-highlight">方法 A: 公式サイトからダウンロードする方法</a></li><li><a href="#方法-b-homebrew-を使う方法" class="table-of-contents__link toc-highlight">方法 B: Homebrew を使う方法</a></li></ul></li><li><a href="#よくあるエラーと対処法" class="table-of-contents__link toc-highlight">よくあるエラーと対処法</a><ul><li><a href="#エラー-1-node-is-not-recognizedまたはnode-command-not-found" class="table-of-contents__link toc-highlight">エラー 1: 「node is not recognized」または「node: command not found」</a></li><li><a href="#エラー-2-インストーラーが起動しない" class="table-of-contents__link toc-highlight">エラー 2: インストーラーが起動しない</a></li><li><a href="#エラー-3-permission-deniedと表示されるmac" class="table-of-contents__link toc-highlight">エラー 3: 「permission denied」と表示される（Mac）</a></li></ul></li><li><a href="#まとめ" class="table-of-contents__link toc-highlight">まとめ</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">ガイド</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/openforge-mcp/docs/intro">はじめに</a></li><li class="footer__item"><a class="footer__link-item" href="/openforge-mcp/docs/setup/install">インストール</a></li><li class="footer__item"><a class="footer__link-item" href="/openforge-mcp/docs/tutorials/vrchat">VRChat向け</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">リンク</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/hirorogo/openforge-mcp" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">OpenForge MCP -- MIT License</div></div></div></footer></div>
+</body>
+</html>
