@@ -5,10 +5,12 @@
   "description": "Free, open-source MCP server for Unity and Blender AI control",
   "license": "MIT",
   "scripts": {
-    "build": "pnpm -r build",
-    "dev": "pnpm --filter mcp-server dev",
-    "test": "pnpm -r test",
-    "setup": "node packages/mcp-server/dist/cli/setup.js"
+    "build": "cd packages/mcp-server && npm run build",
+    "test": "cd packages/mcp-server && npx vitest run",
+    "test:python": "cd packages/blender-addon/tests && python -m pytest -v",
+    "test:all": "npm run test && npm run test:python",
+    "setup": "cd packages/mcp-server && node dist/cli/index.js setup",
+    "start": "cd packages/mcp-server && node dist/index.js"
   },
   "engines": {
     "node": ">=18.0.0"
