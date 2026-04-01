@@ -1,0 +1,28 @@
+# Internal / private
+docs/seecret/
+docs/sekkei.md
+docs/sekkei-plus.md
+image*.png
+*.txt
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Build output
+packages/mcp-server/dist/
+
+# IDE
+.claude/
+.agents/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config
+skills-lock.json
