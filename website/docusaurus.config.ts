@@ -56,8 +56,8 @@ const config: Config = {
 
   themeConfig: {
     announcementBar: {
-      id: 'v030_release',
-      content: 'v0.3.0 リリース -- 620以上のツール、全機能実装完了',
+      id: 'npm_release',
+      content: 'npm で公開しました -- <code>npx openforge-mcp setup</code> で始められます | 786ツール | MIT License',
       backgroundColor: '#1a56db',
       textColor: '#ffffff',
       isCloseable: true,

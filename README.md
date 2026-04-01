@@ -2,7 +2,15 @@
 
 # OpenForge MCP
 
+[![npm](https://img.shields.io/npm/v/openforge-mcp)](https://www.npmjs.com/package/openforge-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/hirorogo/openforge-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/hirorogo/openforge-mcp/actions/workflows/ci.yml)
+
 **Talk to your AI. It controls Unity and Blender. Free.**
+
+```bash
+npx openforge-mcp setup
+```
 
 ---
 

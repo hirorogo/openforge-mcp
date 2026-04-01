@@ -16,15 +16,33 @@ function Hero() {
         <p style={{fontSize: '1.3rem', color: 'var(--ifm-color-emphasis-700)', maxWidth: 700, margin: '0 auto 1rem'}}>
           「廃墟の街を作って」「アバターのポリゴンを減らして」「バグがないかテストして」
         </p>
-        <p style={{fontSize: '1.1rem', color: 'var(--ifm-color-emphasis-600)', maxWidth: 600, margin: '0 auto 2.5rem'}}>
+        <p style={{fontSize: '1.1rem', color: 'var(--ifm-color-emphasis-600)', maxWidth: 600, margin: '0 auto 1.5rem'}}>
           日本語OK。プログラミング不要。完全無料。
+        </p>
+        <pre style={{
+          display: 'inline-block',
+          padding: '0.8rem 2rem',
+          borderRadius: 8,
+          fontSize: '1.15rem',
+          marginBottom: '1.5rem',
+          cursor: 'pointer',
+        }} title="Click to copy">
+          npx openforge-mcp setup
+        </pre>
+        <p style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-500)', marginBottom: '2rem'}}>
+          npm で公開中 -- このコマンド1つで始められます
         </p>
         <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
           <Link className="button button--primary button--lg" to="/docs/setup/install">
-            インストール
+            インストールガイド
           </Link>
           <Link className="button button--secondary button--lg" to="/docs/intro">
             できることを見る
+          </Link>
+          <Link
+            className="button button--outline button--lg"
+            href="https://www.npmjs.com/package/openforge-mcp">
+            npm
           </Link>
           <Link
             className="button button--outline button--lg"

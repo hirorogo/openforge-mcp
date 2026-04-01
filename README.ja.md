@@ -2,7 +2,15 @@ English version: [README.md](README.md)
 
 # OpenForge MCP
 
+[![npm](https://img.shields.io/npm/v/openforge-mcp)](https://www.npmjs.com/package/openforge-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/hirorogo/openforge-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/hirorogo/openforge-mcp/actions/workflows/ci.yml)
+
 **日本語で話すだけで、UnityとBlenderを操作できる。無料。**
+
+```bash
+npx openforge-mcp setup
+```
 
 ---
 
