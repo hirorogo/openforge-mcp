@@ -83,6 +83,13 @@ namespace OpenForge.Editor
             OpenForge.Editor.Tools.WeatherTools.Register();
             OpenForge.Editor.Tools.TimelineTools.Register();
             OpenForge.Editor.Tools.MLAgentsTools.Register();
+            OpenForge.Editor.Tools.ProBuilderTools.Register();
+            OpenForge.Editor.Tools.PackageManagerTools.Register();
+            OpenForge.Editor.Tools.ScriptableObjectTools.Register();
+            OpenForge.Editor.Tools.ProfilerTools.Register();
+            OpenForge.Editor.Tools.GOAPTools.Register();
+            OpenForge.Editor.Tools.RuntimeTools.Register();
+            OpenForge.Editor.Tools.AdvancedAudioTools.Register();
         }
 
         private static Dictionary<string, string> ParseParams(string json)

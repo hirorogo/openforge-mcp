@@ -1,0 +1,13 @@
+name: "Create Level"
+description: "Level designer + art director + technical artist collaborate to build a level"
+agents: [level-designer, art-director, technical-artist]
+steps:
+  - agent: level-designer
+    tools: [create_scene, create_terrain, create_gameobject, set_transform]
+    prompt: "Set up the level geometry and layout"
+  - agent: art-director
+    tools: [create_material, create_light, set_skybox]
+    prompt: "Set up lighting and materials"
+  - agent: technical-artist
+    tools: [analyze_draw_calls, create_lod_group, optimize_textures]
+    prompt: "Optimize for performance"

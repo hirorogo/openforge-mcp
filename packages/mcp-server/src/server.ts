@@ -45,6 +45,13 @@ import unityTemplateTools from "./tools/unity/template.js";
 import unityWeatherTools from "./tools/unity/weather.js";
 import unityTimelineTools from "./tools/unity/timeline.js";
 import unityMLAgentsTools from "./tools/unity/ml-agents.js";
+import unityProBuilderTools from "./tools/unity/probuilder.js";
+import unityPackageManagerTools from "./tools/unity/package-manager.js";
+import unityScriptableObjectTools from "./tools/unity/scriptable-object.js";
+import unityProfilerTools from "./tools/unity/profiler.js";
+import unityGOAPTools from "./tools/unity/goap.js";
+import unityRuntimeTools from "./tools/unity/runtime.js";
+import unityAdvancedAudioTools from "./tools/unity/advanced-audio.js";
 import blenderObjectTools from "./tools/blender/object.js";
 import blenderMeshTools from "./tools/blender/mesh.js";
 import blenderMaterialTools from "./tools/blender/material.js";
@@ -68,6 +75,10 @@ import blenderClothFittingTools from "./tools/blender/cloth_fitting.js";
 import blenderShapeKeyTools from "./tools/blender/shape_key.js";
 import blenderWeightPaintTools from "./tools/blender/weight_paint.js";
 import blenderVrmExportTools from "./tools/blender/vrm_export.js";
+import blenderPolyhavenTools from "./tools/blender/polyhaven.js";
+import blenderSketchfabTools from "./tools/blender/sketchfab.js";
+import blenderPythonExecTools from "./tools/blender/python_exec.js";
+import blenderHunyuan3dTools from "./tools/blender/hunyuan3d.js";
 import godotNodeTools from "./tools/godot/node.js";
 import godotResourceTools from "./tools/godot/resource.js";
 import versionControlToolDefs from "./tools/system/version-control.js";
@@ -77,7 +88,9 @@ import recipeToolDefs from "./tools/system/recipe.js";
 import safetyToolDefs from "./tools/system/safety.js";
 import extensionToolDefs from "./tools/system/extension.js";
 import assetGenerationToolDefs from "./tools/system/asset-generation.js";
+import gameStudiosToolDefs from "./tools/system/game-studios.js";
 import { AssetGeneration } from "./asset-generation.js";
+import { GameStudiosBridge } from "./game-studios.js";
 
 import http from "node:http";
 
@@ -103,6 +116,7 @@ export function createOpenForgeServer(options: ServerOptions): {
   safetyGuard: SafetyGuard;
   extensionManager: ExtensionManager;
   assetGeneration: AssetGeneration;
+  gameStudiosBridge: GameStudiosBridge;
   operationLog: OperationLog;
   dashboard: Dashboard;
   start: () => Promise<void>;
@@ -134,6 +148,13 @@ export function createOpenForgeServer(options: ServerOptions): {
   registry.registerTools(unityWeatherTools);
   registry.registerTools(unityTimelineTools);
   registry.registerTools(unityMLAgentsTools);
+  registry.registerTools(unityProBuilderTools);
+  registry.registerTools(unityPackageManagerTools);
+  registry.registerTools(unityScriptableObjectTools);
+  registry.registerTools(unityProfilerTools);
+  registry.registerTools(unityGOAPTools);
+  registry.registerTools(unityRuntimeTools);
+  registry.registerTools(unityAdvancedAudioTools);
   registry.registerTools(blenderObjectTools);
   registry.registerTools(blenderMeshTools);
   registry.registerTools(blenderMaterialTools);
@@ -157,6 +178,10 @@ export function createOpenForgeServer(options: ServerOptions): {
   registry.registerTools(blenderShapeKeyTools);
   registry.registerTools(blenderWeightPaintTools);
   registry.registerTools(blenderVrmExportTools);
+  registry.registerTools(blenderPolyhavenTools);
+  registry.registerTools(blenderSketchfabTools);
+  registry.registerTools(blenderPythonExecTools);
+  registry.registerTools(blenderHunyuan3dTools);
   registry.registerTools(godotNodeTools);
   registry.registerTools(godotResourceTools);
   registry.registerTools(versionControlToolDefs);
@@ -166,6 +191,7 @@ export function createOpenForgeServer(options: ServerOptions): {
   registry.registerTools(safetyToolDefs);
   registry.registerTools(extensionToolDefs);
   registry.registerTools(assetGenerationToolDefs);
+  registry.registerTools(gameStudiosToolDefs);
 
   const unityAdapter = new UnityAdapter();
   const blenderAdapter = new BlenderAdapter();
@@ -192,6 +218,7 @@ export function createOpenForgeServer(options: ServerOptions): {
 
   const extensionManager = new ExtensionManager();
   const assetGeneration = new AssetGeneration();
+  const gameStudiosBridge = new GameStudiosBridge();
 
   const dashboard = new Dashboard({
     registry,
@@ -631,6 +658,51 @@ export function createOpenForgeServer(options: ServerOptions): {
             type: "object" as const,
             properties: {},
             required: [],
+          },
+        },
+        // Game Studios integration tools
+        {
+          name: "setup_game_studios",
+          description: "Generate config files to integrate OpenForge MCP with an existing Claude Code Game Studios project.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              projectPath: { type: "string", description: "Absolute path to the Game Studios project directory." },
+              engine: { type: "string", enum: ["unity", "blender", "godot"], description: "Primary game engine." },
+            },
+            required: ["projectPath", "engine"],
+          },
+        },
+        {
+          name: "get_agent_tools",
+          description: "Return which OpenForge tool categories a specific Game Studios agent should use.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              agent: { type: "string", description: 'Agent role name (e.g. "lead-programmer", "art-director").' },
+            },
+            required: ["agent"],
+          },
+        },
+        {
+          name: "get_studio_status",
+          description: "Return studio status: connected engines, available agent roles, and tool counts.",
+          inputSchema: {
+            type: "object" as const,
+            properties: {},
+            required: [],
+          },
+        },
+        {
+          name: "run_studio_workflow",
+          description: 'Execute a predefined multi-agent studio workflow (e.g. "create_level", "performance_audit", "art_pass", "qa_pass").',
+          inputSchema: {
+            type: "object" as const,
+            properties: {
+              workflow: { type: "string", description: "Workflow name." },
+              params: { type: "object", description: "Optional workflow parameters.", additionalProperties: true },
+            },
+            required: ["workflow"],
           },
         },
       ],
@@ -1278,6 +1350,112 @@ export function createOpenForgeServer(options: ServerOptions): {
         };
       }
 
+      // --- Game Studios integration tools ---
+
+      case "setup_game_studios": {
+        try {
+          const projectPath = args?.projectPath as string;
+          const engine = args?.engine as "unity" | "blender" | "godot";
+          if (!projectPath || !engine) {
+            return {
+              content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameters: projectPath and engine" }) }],
+              isError: true,
+            };
+          }
+          if (engine !== "unity" && engine !== "blender" && engine !== "godot") {
+            return {
+              content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: 'Invalid engine. Must be "unity", "blender", or "godot".' }) }],
+              isError: true,
+            };
+          }
+          const config = gameStudiosBridge.generateStudioConfig(engine);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: true, projectPath, engine, config }, null, 2) }],
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: msg }) }],
+            isError: true,
+          };
+        }
+      }
+
+      case "get_agent_tools": {
+        const agentRole = args?.agent as string;
+        if (!agentRole) {
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: agent" }) }],
+            isError: true,
+          };
+        }
+        const permissions = gameStudiosBridge.generateAgentPermissions(agentRole);
+        if (!permissions) {
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: `Unknown agent role: "${agentRole}". Use get_studio_status to see available roles.` }) }],
+            isError: true,
+          };
+        }
+        return {
+          content: [{ type: "text" as const, text: JSON.stringify({ success: true, ...permissions }, null, 2) }],
+        };
+      }
+
+      case "get_studio_status": {
+        const engines = {
+          unity: unityAdapter.isConnected(),
+          blender: blenderAdapter.isConnected(),
+          godot: godotAdapter.isConnected(),
+        };
+        const roles = gameStudiosBridge.getAgentRoles();
+        const workflows = Object.keys(gameStudiosBridge.getWorkflowIntegration());
+        const toolCount = registry.getTools().length;
+        return {
+          content: [{
+            type: "text" as const,
+            text: JSON.stringify({
+              success: true,
+              engines,
+              agentRoles: roles,
+              workflows,
+              toolCount,
+            }, null, 2),
+          }],
+        };
+      }
+
+      case "run_studio_workflow": {
+        const workflowName = args?.workflow as string;
+        if (!workflowName) {
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "Missing required parameter: workflow" }) }],
+            isError: true,
+          };
+        }
+        const workflow = gameStudiosBridge.getWorkflow(workflowName);
+        if (!workflow) {
+          const available = Object.keys(gameStudiosBridge.getWorkflowIntegration());
+          return {
+            content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: `Unknown workflow: "${workflowName}". Available: ${available.join(", ")}` }) }],
+            isError: true,
+          };
+        }
+        const workflowParams = (args?.params as Record<string, unknown>) || {};
+        return {
+          content: [{
+            type: "text" as const,
+            text: JSON.stringify({
+              success: true,
+              workflow: workflow.name,
+              description: workflow.description,
+              agents: workflow.agents,
+              steps: workflow.steps,
+              params: workflowParams,
+            }, null, 2),
+          }],
+        };
+      }
+
       default:
         return {
           content: [
@@ -1504,5 +1682,5 @@ export function createOpenForgeServer(options: ServerOptions): {
     });
   };
 
-  return { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, versionControl, transactionManager, pipeline, recipeEngine, safetyGuard, extensionManager, assetGeneration, operationLog, dashboard, start };
+  return { server, registry, router, unityAdapter, blenderAdapter, godotAdapter, versionControl, transactionManager, pipeline, recipeEngine, safetyGuard, extensionManager, assetGeneration, gameStudiosBridge, operationLog, dashboard, start };
 }

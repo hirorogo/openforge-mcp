@@ -1,0 +1,13 @@
+name: "QA Pass"
+description: "QA tester plays the game, reports bugs, captures screenshot evidence"
+agents: [qa-tester, qa-lead]
+steps:
+  - agent: qa-tester
+    tools: [enter_play_mode, simulate_input, take_screenshot]
+    prompt: "Playtest the game and capture any issues"
+  - agent: qa-tester
+    tools: [take_screenshot, exit_play_mode]
+    prompt: "Document bugs with screenshots and console output"
+  - agent: qa-lead
+    tools: [take_screenshot]
+    prompt: "Compare screenshots and compile the bug report"

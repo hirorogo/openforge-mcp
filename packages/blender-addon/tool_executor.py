@@ -25,6 +25,7 @@ from .tools import (
     cloth_fitting_tools,
     collection_tools,
     game_asset_tools,
+    hunyuan3d_tools,
     import_export_tools,
     inspection_tools,
     lighting_tools,
@@ -37,12 +38,15 @@ from .tools import (
     modifier_extended_tools,
     node_tools,
     object_tools,
+    polyhaven_tools,
     procedural_tools,
+    python_exec_tools,
     render_tools,
     scene_tools,
     screenshot_tools,
     sculpt_tools,
     shape_key_tools,
+    sketchfab_tools,
     texture_tools,
     uv_tools,
     uv_advanced_tools,
@@ -105,6 +109,10 @@ def _build_registry() -> None:
     _register_module_tools(shape_key_tools)
     _register_module_tools(weight_paint_tools)
     _register_module_tools(vrm_export_tools)
+    _register_module_tools(polyhaven_tools)
+    _register_module_tools(sketchfab_tools)
+    _register_module_tools(python_exec_tools)
+    _register_module_tools(hunyuan3d_tools)
 
 
 # Build on import so the registry is ready when the server starts.

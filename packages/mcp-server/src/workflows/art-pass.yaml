@@ -1,0 +1,16 @@
+name: "Art Pass"
+description: "Art director + VFX artist polish materials, lighting, and effects"
+agents: [art-director, vfx-artist, technical-artist]
+steps:
+  - agent: art-director
+    tools: [create_material, set_material_color, set_material_property]
+    prompt: "Set up and refine materials"
+  - agent: art-director
+    tools: [create_light, set_light_property, set_skybox]
+    prompt: "Adjust lighting and atmosphere"
+  - agent: vfx-artist
+    tools: [create_particle_system, set_particle_property]
+    prompt: "Add visual effects and particles"
+  - agent: art-director
+    tools: [take_screenshot]
+    prompt: "Review final result with screenshots"

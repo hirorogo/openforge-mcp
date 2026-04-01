@@ -114,6 +114,7 @@ npx openforge-mcp setup
 | [セーブとロード](https://hirorogo.github.io/openforge-mcp/docs/tutorials/save-restore) | バージョン管理の使い方 |
 | [VRChatワールドを作ろう](https://hirorogo.github.io/openforge-mcp/docs/tutorials/vrchat) | 海沿いのカフェテラスを制作 |
 | [ツール一覧](https://hirorogo.github.io/openforge-mcp/docs/reference/unity-tools) | Unity / Blender / Godot 全ツール |
+| [Game Studios 連携](https://hirorogo.github.io/openforge-mcp/docs/advanced/game-studios) | Claude Code Game Studios との連携 |
 | [開発に参加する](CONTRIBUTING.ja.md) | PR の出し方、ツールの追加方法 |
 
 ## ロードマップ

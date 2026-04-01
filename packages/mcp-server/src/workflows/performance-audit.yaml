@@ -1,0 +1,16 @@
+name: "Performance Audit"
+description: "QA tester + tools programmer audit performance and produce a report"
+agents: [qa-tester, tools-programmer, qa-lead]
+steps:
+  - agent: qa-tester
+    tools: [start_profiler, get_profiler_data]
+    prompt: "Profile the scene and collect performance metrics"
+  - agent: tools-programmer
+    tools: [analyze_draw_calls, create_lod_group, optimize_textures, combine_meshes]
+    prompt: "Apply optimizations based on profiler data"
+  - agent: qa-tester
+    tools: [enter_play_mode, take_screenshot]
+    prompt: "Playtest the optimized scene"
+  - agent: qa-lead
+    tools: [get_profiler_data, take_screenshot]
+    prompt: "Generate the final performance report with before/after comparison"

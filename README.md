@@ -113,6 +113,7 @@ Documentation site: **https://hirorogo.github.io/openforge-mcp/**
 | [Save and Restore](https://hirorogo.github.io/openforge-mcp/docs/tutorials/save-restore) | Version control without Git knowledge |
 | [VRChat World](https://hirorogo.github.io/openforge-mcp/docs/tutorials/vrchat) | Build a seaside cafe terrace |
 | [Tool Reference](https://hirorogo.github.io/openforge-mcp/docs/reference/unity-tools) | All Unity / Blender / Godot tools |
+| [Game Studios Integration](https://hirorogo.github.io/openforge-mcp/docs/advanced/game-studios) | Integration with Claude Code Game Studios |
 | [Contributing](CONTRIBUTING.md) | How to submit PRs and add tools |
 
 ## Roadmap
