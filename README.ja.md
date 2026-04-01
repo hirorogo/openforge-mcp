@@ -108,11 +108,11 @@ npx openforge-mcp setup
 | [はじめに](https://hirorogo.github.io/openforge-mcp/docs/intro) | OpenForge MCP の概要と独自機能 |
 | [インストール](https://hirorogo.github.io/openforge-mcp/docs/setup/install) | Node.js の入れ方からセットアップまで |
 | [はじめての操作](https://hirorogo.github.io/openforge-mcp/docs/tutorials/first-steps) | AIに最初の指示を出してみる |
-| [シーンを作ってみよう](https://hirorogo.github.io/openforge-mcp/docs/tutorials/scene-building) | 屋上庭園を一から構築 |
-| [Blenderでモデリング](https://hirorogo.github.io/openforge-mcp/docs/tutorials/modeling) | 灯籠を作ってエクスポート |
+| [シーンを作ってみよう](https://hirorogo.github.io/openforge-mcp/docs/tutorials/scene-building) | 路地裏の古本屋を一から構築 |
+| [Blenderでモデリング](https://hirorogo.github.io/openforge-mcp/docs/tutorials/modeling) | 街灯ポールを作ってエクスポート |
 | [BlenderからUnityへ](https://hirorogo.github.io/openforge-mcp/docs/tutorials/cross-app) | クロスアプリ連携チュートリアル |
 | [セーブとロード](https://hirorogo.github.io/openforge-mcp/docs/tutorials/save-restore) | バージョン管理の使い方 |
-| [VRChatワールドを作ろう](https://hirorogo.github.io/openforge-mcp/docs/tutorials/vrchat) | 星空の展望台を制作 |
+| [VRChatワールドを作ろう](https://hirorogo.github.io/openforge-mcp/docs/tutorials/vrchat) | 海沿いのカフェテラスを制作 |
 | [ツール一覧](https://hirorogo.github.io/openforge-mcp/docs/reference/unity-tools) | Unity / Blender / Godot 全ツール |
 | [開発に参加する](CONTRIBUTING.ja.md) | PR の出し方、ツールの追加方法 |
 

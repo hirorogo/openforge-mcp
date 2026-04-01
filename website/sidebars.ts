@@ -24,6 +24,9 @@ const sidebars: SidebarsConfig = {
         'tutorials/cross-app',
         'tutorials/save-restore',
         'tutorials/vrchat',
+        'tutorials/physics-playground',
+        'tutorials/avatar-editing',
+        'tutorials/ai-playtest',
       ],
     },
     {
@@ -34,6 +37,9 @@ const sidebars: SidebarsConfig = {
         'advanced/modes',
         'advanced/http-api',
         'advanced/recipe',
+        'advanced/local-llm',
+        'advanced/multi-agent',
+        'advanced/pipeline-detail',
       ],
     },
   ],
@@ -42,6 +48,8 @@ const sidebars: SidebarsConfig = {
     'reference/blender-tools',
     'reference/godot-tools',
     'reference/system-tools',
+    'reference/faq',
+    'reference/changelog',
     {
       type: 'category',
       label: '開発に参加する',
