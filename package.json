@@ -1,0 +1,16 @@
+{
+  "name": "openforge-mcp",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Free, open-source MCP server for Unity and Blender AI control",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter mcp-server dev",
+    "test": "pnpm -r test",
+    "setup": "node packages/mcp-server/dist/cli/setup.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

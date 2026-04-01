@@ -1,0 +1,20 @@
+{
+  "name": "com.openforge.mcp",
+  "version": "0.1.0",
+  "displayName": "OpenForge MCP",
+  "description": "Control Unity Editor via natural language AI through the Model Context Protocol.",
+  "unity": "2021.3",
+  "documentationUrl": "https://github.com/openforge/mcp",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "ai",
+    "openforge",
+    "automation"
+  ],
+  "author": {
+    "name": "OpenForge",
+    "url": "https://github.com/openforge"
+  },
+  "type": "tool"
+}
