@@ -3,7 +3,7 @@ import * as fs from "node:fs";
 import { getServerEntryPath } from "./setup.js";
 
 export interface VscodeConfigOptions {
-  mode: "full" | "essential" | "dynamic";
+  mode: "full" | "essential" | "dynamic" | "vrchat";
   unityPort?: number;
   blenderPort?: number;
   godotPort?: number;

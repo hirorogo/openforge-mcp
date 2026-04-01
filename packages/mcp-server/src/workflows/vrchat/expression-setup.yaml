@@ -1,0 +1,10 @@
+name: "Expression Setup"
+description: "Set up facial expressions with FaceEmo"
+target: unity
+steps:
+  - tool: auto_detect_blendshapes
+    description: "Detect available blendshapes"
+  - tool: create_expression_preset
+    description: "Create standard expression set"
+  - tool: create_expression_menu
+    description: "Create expression menu"

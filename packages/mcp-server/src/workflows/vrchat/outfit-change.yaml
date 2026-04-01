@@ -1,0 +1,9 @@
+name: "Outfit Change"
+description: "Set up outfit with Modular Avatar"
+target: unity
+steps:
+  - tool: auto_setup_outfit
+    description: "Auto-configure Modular Avatar for outfit"
+  - tool: add_ma_toggle
+    description: "Add ON/OFF toggle for outfit"
+  - tool: validate_for_upload

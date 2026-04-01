@@ -15,7 +15,7 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number; dashboar
     const arg = argv[i];
     if (arg === "--mode" && i + 1 < argv.length) {
       const value = argv[++i];
-      if (value === "full" || value === "essential" || value === "dynamic") {
+      if (value === "full" || value === "essential" || value === "dynamic" || value === "vrchat") {
         mode = value;
       } else {
         process.stderr.write(`Unknown mode "${value}". Using "full".\n`);
@@ -48,7 +48,7 @@ function parseArgs(argv: string[]): ServerOptions & { httpPort: number; dashboar
           "Usage: openforge-mcp [options]",
           "",
           "Options:",
-          "  --mode <full|essential|dynamic>  Tool exposure mode (default: full)",
+          "  --mode <full|essential|dynamic|vrchat>  Tool exposure mode (default: full)",
           "  --transport <stdio|sse>          MCP transport (default: stdio)",
           "  --sse-port <port>                SSE server port (default: 19820)",
           "  --http-port <port>               HTTP API port (default: 19810)",

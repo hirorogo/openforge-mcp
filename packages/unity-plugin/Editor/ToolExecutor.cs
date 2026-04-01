@@ -90,6 +90,12 @@ namespace OpenForge.Editor
             OpenForge.Editor.Tools.GOAPTools.Register();
             OpenForge.Editor.Tools.RuntimeTools.Register();
             OpenForge.Editor.Tools.AdvancedAudioTools.Register();
+            OpenForge.Editor.Tools.VRCPerformanceTools.Register();
+            OpenForge.Editor.Tools.VRChatSDKTools.Register();
+            OpenForge.Editor.Tools.PhysBoneTools.Register();
+            OpenForge.Editor.Tools.ModularAvatarTools.Register();
+            OpenForge.Editor.Tools.FaceEmoTools.Register();
+            OpenForge.Editor.Tools.TextureEditTools.Register();
         }
 
         private static Dictionary<string, string> ParseParams(string json)

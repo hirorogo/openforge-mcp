@@ -1,3 +1,5 @@
+import { VRCHAT_TOOLS, VRCHAT_BLENDER_CATEGORIES } from "./vrchat-mode.js";
+
 export interface ParameterSchema {
   type: "object";
   properties: Record<string, unknown>;
@@ -13,7 +15,7 @@ export interface ToolDefinition {
   parameters: ParameterSchema;
 }
 
-export type ToolMode = "full" | "essential" | "dynamic";
+export type ToolMode = "full" | "essential" | "dynamic" | "vrchat";
 
 /**
  * The base set of tools registered at startup in dynamic mode.
@@ -142,6 +144,15 @@ export class ToolRegistry {
         return ESSENTIAL_TOOLS.has(key);
       case "dynamic":
         return DYNAMIC_BASE_TOOLS.has(key) || this.dynamicallyLoaded.has(key);
+      case "vrchat": {
+        if (VRCHAT_TOOLS.has(key)) return true;
+        // For blender tools, check by category
+        const tool = this.tools.get(key);
+        if (tool && tool.target === "blender" && VRCHAT_BLENDER_CATEGORIES.has(tool.category)) {
+          return true;
+        }
+        return false;
+      }
     }
   }
 

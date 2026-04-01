@@ -1,0 +1,14 @@
+name: "Avatar Optimization"
+description: "Optimize avatar for better VRChat performance rank"
+target: unity
+steps:
+  - tool: check_avatar_rank
+    description: "Check current rank"
+  - tool: suggest_optimizations
+    description: "Get optimization suggestions"
+  - tool: auto_optimize_avatar
+    description: "Run automated optimizations"
+  - tool: check_avatar_rank
+    description: "Check improved rank"
+  - tool: compare_before_after
+    description: "Show before/after comparison"

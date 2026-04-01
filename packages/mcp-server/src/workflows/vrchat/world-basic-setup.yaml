@@ -1,0 +1,13 @@
+name: "World Basic Setup"
+description: "Set up basic VRChat world with spawn, lighting, and mirror"
+target: unity
+steps:
+  - tool: setup_vrc_world
+    description: "Add VRC Scene Descriptor"
+  - tool: add_spawn_point
+    params: { position: [0, 0, 0], rotation: [0, 0, 0] }
+  - tool: create_light
+    params: { type: "Directional", intensity: 1.0 }
+  - tool: add_mirror
+    params: { position: [0, 1.5, 3], size: [2, 2] }
+  - tool: validate_for_upload

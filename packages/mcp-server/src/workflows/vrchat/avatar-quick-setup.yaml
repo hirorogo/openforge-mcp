@@ -1,0 +1,13 @@
+name: "Avatar Quick Setup"
+description: "Import VRM, optimize, and set up as VRChat avatar"
+target: unity
+steps:
+  - tool: setup_vrc_avatar
+    description: "Set up VRC Avatar Descriptor"
+  - tool: set_viewpoint
+    params: { mode: "auto" }
+    description: "Auto-detect viewpoint from head bone"
+  - tool: check_avatar_rank
+    description: "Check initial performance rank"
+  - tool: validate_for_upload
+    description: "Validate for VRChat upload"

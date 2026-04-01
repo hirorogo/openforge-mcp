@@ -6,7 +6,7 @@ export type ClientName = "claude-desktop" | "cursor" | "vscode" | "lmstudio";
 
 export interface SetupOptions {
   client?: ClientName;
-  mode: "full" | "essential" | "dynamic";
+  mode: "full" | "essential" | "dynamic" | "vrchat";
   port?: number;
   blenderPort?: number;
   godotPort?: number;
@@ -230,10 +230,10 @@ export function parseSetupArgs(argv: string[]): SetupOptions {
       }
     } else if (arg === "--mode" && i + 1 < argv.length) {
       const value = argv[++i];
-      if (value === "full" || value === "essential" || value === "dynamic") {
+      if (value === "full" || value === "essential" || value === "dynamic" || value === "vrchat") {
         options.mode = value;
       } else {
-        process.stderr.write(`[ERROR] Unknown mode "${value}". Valid: full, essential, dynamic\n`);
+        process.stderr.write(`[ERROR] Unknown mode "${value}". Valid: full, essential, dynamic, vrchat\n`);
         process.exit(1);
       }
     } else if (arg === "--port" && i + 1 < argv.length) {
@@ -253,7 +253,7 @@ export function parseSetupArgs(argv: string[]): SetupOptions {
           "",
           "Options:",
           "  --client <name>          Target client (claude-desktop, cursor, vscode, lmstudio)",
-          "  --mode <mode>            Tool mode: full, essential, dynamic (default: full)",
+          "  --mode <mode>            Tool mode: full, essential, dynamic, vrchat (default: full)",
           "  --port <number>          Override Unity port",
           "  --blender-port <number>  Override Blender port",
           "  --godot-port <number>    Override Godot port",
