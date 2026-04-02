@@ -36,7 +36,7 @@ namespace OpenForge.Editor.Tools
                 case "directional": type = LightType.Directional; break;
                 case "point": type = LightType.Point; break;
                 case "spot": type = LightType.Spot; break;
-                case "area": type = LightType.Area; break;
+                case "area": type = LightType.Rectangle; break;
                 default: return Fail($"Unknown light type: {lightType}. Valid: directional, point, spot, area");
             }
 

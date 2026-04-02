@@ -138,7 +138,9 @@ namespace OpenForge.Editor.Tools
             float density = ParseFloat(p, "density", 0.05f);
             string colorStr = GetParam(p, "color", "");
 
-            Undo.RecordObject(UnityEngine.Object.FindObjectOfType<RenderSettings>() as UnityEngine.Object ?? RenderSettings.defaultReflectionMode as UnityEngine.Object, "Set Fog");
+            // RenderSettings is static and not a UnityEngine.Object; record the lighting settings asset instead.
+            var lightingSettings = Undo.GetCurrentGroup();
+            Undo.SetCurrentGroupName("Set Fog");
 
             RenderSettings.fog = enable;
             RenderSettings.fogMode = FogMode.ExponentialSquared;

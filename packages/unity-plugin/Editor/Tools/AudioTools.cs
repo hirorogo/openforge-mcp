@@ -246,12 +246,12 @@ namespace OpenForge.Editor.Tools
 
             EnsureDirectoryExists(path);
 
-            AudioMixer mixer = UnityEngine.Audio.AudioMixer.CreateAsset(path) as AudioMixer;
+            var mixer = ScriptableObject.CreateInstance<AudioMixer>();
             if (mixer == null)
             {
-                var mixerAsset = new UnityEngine.ScriptableObject();
-                return Fail("AudioMixer.CreateAsset is not available. Create the mixer manually via Assets > Create > Audio Mixer.");
+                return Fail("Failed to create AudioMixer instance. Create the mixer manually via Assets > Create > Audio Mixer.");
             }
+            AssetDatabase.CreateAsset(mixer, path);
 
             return new ToolResult
             {

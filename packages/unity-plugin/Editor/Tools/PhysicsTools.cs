@@ -42,11 +42,11 @@ namespace OpenForge.Editor.Tools
 
             string drag = GetParam(p, "drag", "");
             if (!string.IsNullOrEmpty(drag))
-                rb.drag = float.Parse(drag, System.Globalization.CultureInfo.InvariantCulture);
+                rb.linearDamping = float.Parse(drag, System.Globalization.CultureInfo.InvariantCulture);
 
             string angularDrag = GetParam(p, "angular_drag", "");
             if (!string.IsNullOrEmpty(angularDrag))
-                rb.angularDrag = float.Parse(angularDrag, System.Globalization.CultureInfo.InvariantCulture);
+                rb.angularDamping = float.Parse(angularDrag, System.Globalization.CultureInfo.InvariantCulture);
 
             string useGravity = GetParam(p, "use_gravity", "");
             if (!string.IsNullOrEmpty(useGravity))
@@ -145,11 +145,11 @@ namespace OpenForge.Editor.Tools
                 return Fail($"No collider on '{targetName}'");
 
             string materialPath = GetParam(p, "path", "");
-            PhysicMaterial mat;
+            PhysicsMaterial mat;
 
             if (!string.IsNullOrEmpty(materialPath))
             {
-                mat = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(materialPath);
+                mat = AssetDatabase.LoadAssetAtPath<PhysicsMaterial>(materialPath);
                 if (mat == null)
                     return Fail($"Physics material not found at: {materialPath}");
             }
@@ -159,7 +159,7 @@ namespace OpenForge.Editor.Tools
                 string savePath = GetParam(p, "save_path", $"Assets/{matName}.physicMaterial");
                 EnsureDirectoryExists(savePath);
 
-                mat = new PhysicMaterial(matName);
+                mat = new PhysicsMaterial(matName);
 
                 string dynamicFriction = GetParam(p, "dynamic_friction", "");
                 if (!string.IsNullOrEmpty(dynamicFriction))
@@ -463,8 +463,8 @@ namespace OpenForge.Editor.Tools
             {
                 sb.Append("\"rigidbody\":{");
                 sb.Append($"\"mass\":{rb.mass},");
-                sb.Append($"\"drag\":{rb.drag},");
-                sb.Append($"\"angularDrag\":{rb.angularDrag},");
+                sb.Append($"\"drag\":{rb.linearDamping},");
+                sb.Append($"\"angularDrag\":{rb.angularDamping},");
                 sb.Append($"\"useGravity\":{(rb.useGravity ? "true" : "false")},");
                 sb.Append($"\"isKinematic\":{(rb.isKinematic ? "true" : "false")},");
                 sb.Append($"\"constraints\":\"{rb.constraints}\"");

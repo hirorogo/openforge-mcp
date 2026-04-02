@@ -397,14 +397,14 @@ namespace OpenForge.Editor.Tools
                             var genericMethod = addPipeline.MakeGenericMethod(noiseType);
                             var noise = genericMethod.Invoke(vcam, null);
 
-                            string amplitude = GetParam(p, "amplitude", "1");
-                            string frequency = GetParam(p, "frequency", "1");
+                            string ampStr = GetParam(p, "amplitude", "1");
+                            string freqStr = GetParam(p, "frequency", "1");
 
                             var ampField = noiseType.GetField("m_AmplitudeGain");
-                            if (ampField != null) ampField.SetValue(noise, float.Parse(amplitude, System.Globalization.CultureInfo.InvariantCulture));
+                            if (ampField != null) ampField.SetValue(noise, float.Parse(ampStr, System.Globalization.CultureInfo.InvariantCulture));
 
                             var freqField = noiseType.GetField("m_FrequencyGain");
-                            if (freqField != null) freqField.SetValue(noise, float.Parse(frequency, System.Globalization.CultureInfo.InvariantCulture));
+                            if (freqField != null) freqField.SetValue(noise, float.Parse(freqStr, System.Globalization.CultureInfo.InvariantCulture));
 
                             return new ToolResult
                             {

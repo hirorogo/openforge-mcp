@@ -162,13 +162,13 @@ namespace OpenForge.Editor.Tools
                         sb.Append($"\"version\":\"{EscapeJson(info.version)}\",");
                         sb.Append($"\"description\":\"{EscapeJson(info.description)}\",");
                         sb.Append($"\"source\":\"{info.source}\",");
-                        sb.Append($"\"status\":\"{info.status}\",");
+                        sb.Append($"\"status\":\"{info.source}\",");
                         sb.Append($"\"category\":\"{EscapeJson(info.category)}\",");
 
                         // List versions if available
                         sb.Append("\"versions\":{");
                         sb.Append($"\"compatible\":\"{EscapeJson(info.versions?.compatible ?? "")}\",");
-                        sb.Append($"\"verified\":\"{EscapeJson(info.versions?.verified ?? "")}\"");
+                        sb.Append($"\"verified\":\"{EscapeJson(info.versions?.recommended ?? "")}\"");
                         sb.Append("},");
 
                         // Dependencies

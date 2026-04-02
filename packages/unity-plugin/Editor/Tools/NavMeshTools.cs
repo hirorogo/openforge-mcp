@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
-using UnityEditor.AI;
+using EditorNavMeshBuilder = UnityEditor.AI.NavMeshBuilder;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,15 +30,15 @@ namespace OpenForge.Editor.Tools
             string stepHeight = GetParam(p, "step_height", "");
 
             if (!string.IsNullOrEmpty(agentRadius))
-                NavMeshBuilder.agentRadius = float.Parse(agentRadius, System.Globalization.CultureInfo.InvariantCulture);
+                EditorNavMeshBuilder.agentRadius = float.Parse(agentRadius, System.Globalization.CultureInfo.InvariantCulture);
             if (!string.IsNullOrEmpty(agentHeight))
-                NavMeshBuilder.agentHeight = float.Parse(agentHeight, System.Globalization.CultureInfo.InvariantCulture);
+                EditorNavMeshBuilder.agentHeight = float.Parse(agentHeight, System.Globalization.CultureInfo.InvariantCulture);
             if (!string.IsNullOrEmpty(maxSlope))
-                NavMeshBuilder.agentSlope = float.Parse(maxSlope, System.Globalization.CultureInfo.InvariantCulture);
+                EditorNavMeshBuilder.agentSlope = float.Parse(maxSlope, System.Globalization.CultureInfo.InvariantCulture);
             if (!string.IsNullOrEmpty(stepHeight))
-                NavMeshBuilder.agentClimb = float.Parse(stepHeight, System.Globalization.CultureInfo.InvariantCulture);
+                EditorNavMeshBuilder.agentClimb = float.Parse(stepHeight, System.Globalization.CultureInfo.InvariantCulture);
 
-            NavMeshBuilder.BuildNavMesh();
+            EditorNavMeshBuilder.BuildNavMesh();
 
             return new ToolResult
             {
