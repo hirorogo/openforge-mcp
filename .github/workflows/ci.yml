@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - run: cd packages/mcp-server && npm ci
       - run: cd packages/mcp-server && npx tsc --noEmit
       - run: cd packages/mcp-server && npx vitest run
