@@ -1,6 +1,6 @@
 {
   "name": "openforge-mcp",
-  "version": "0.0.1",
+  "version": "0.8.0",
   "description": "MCP server for Unity and Blender AI control",
   "license": "MIT",
   "type": "module",
@@ -21,12 +21,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/openforge/openforge-mcp.git",
+    "url": "https://github.com/hirorogo/openforge-mcp.git",
     "directory": "packages/mcp-server"
   },
-  "homepage": "https://github.com/openforge/openforge-mcp#readme",
+  "homepage": "https://github.com/hirorogo/openforge-mcp#readme",
   "bugs": {
-    "url": "https://github.com/openforge/openforge-mcp/issues"
+    "url": "https://github.com/hirorogo/openforge-mcp/issues"
   },
   "publishConfig": {
     "access": "public"
